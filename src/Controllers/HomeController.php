@@ -26,18 +26,4 @@ class HomeController extends AbstractController {
 			require ROOT . "/src/Views/logged-out.php";
 		}
 	}
-
-	/**
-	 * Handled upload of files
-	 *
-	 * @param mixed $request
-	 * @return void
-	 */
-	public function upload( $request ) {
-		header( "Content-Type: Application/json" );
-
-		$response = [];
-		$response['text'] = [ "echo 'Lorem ipsum dolor", $request ];
-		echo json_encode( $response );
-	}
 }
