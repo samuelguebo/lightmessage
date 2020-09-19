@@ -1,0 +1,31 @@
+{
+  "files.autoSave": "onFocusChange",
+  "git.enabled": true,
+  "editor.formatOnSave": true,
+  "[php]": {
+    "editor.formatOnSave": true,
+  },
+  "[xml]": {
+    "editor.formatOnSave": false,
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "php.validate.enable": true,
+  "php.validate.run": "onSave",
+  "eslint.enable": true,
+  "eslint.validate": [
+    "php",
+  ],
+  "php-cs-fixer.executablePath": "php-cs-fixer",
+  "php-cs-fixer.onsave": true,
+  "php-cs-fixer.rules": "@PSR4",
+  "php-cs-fixer.config": ".php_cs;.php_cs.dist",
+  "php-cs-fixer.allowRisky": false,
+  "php-cs-fixer.pathMode": "override",
+  "php-cs-fixer.exclude": [],
+  "php-cs-fixer.autoFixByBracket": true,
+  "php-cs-fixer.autoFixBySemicolon": false,
+  "php-cs-fixer.formatHtml": false,
+  "php-cs-fixer.documentFormattingProvider": true
+}
