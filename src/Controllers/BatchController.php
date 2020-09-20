@@ -1,5 +1,7 @@
 <?php namespace Lightmessage\Controllers;
 
+use Lightmessage\Config\Settings;
+
 /**
  * Controller handling message batches
  */
@@ -22,5 +24,19 @@ class BatchController extends AbstractController {
 	 */
 	public function save( $request = null ) {
 		// Save data to Database
+	}
+
+	/**
+	 * Generic middleware shared accross
+	 * all child classes
+	 *
+	 * @param mixed $route
+	 * @param mixed $request
+	 * @return void
+	 */
+	public function middleWare( $route, $request ) {
+		define( 'APP_NAME', Settings::$APP_NAME );
+		define( 'APP_SLOGAN', Settings::$APP_SLOGAN );
+		define( 'APP_DESCRIPTION', Settings::$APP_DESCRIPTION );
 	}
 }

@@ -6,13 +6,9 @@
 ?>
 <?php require_once '../header.php'; ?>
 
-  <section class="container boxed">
-	<section class="jumbotron">
-
 	  <h1>Akwaba, <?php echo $user->name; ?>. 
 	  <a href="./logout" class="btn btn-success btn-logout"><i class="fa fa-sign-out"></i> Logout</a></h1>
 	  <p class="lead"><?php echo APP_DESCRIPTION; ?></p>
-	</section>
 	<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
 	<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>

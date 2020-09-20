@@ -4,6 +4,9 @@
  * of pages
  */
 ?>
+
+</section>
+
 <div id="footer">
 	<div class="container boxed">
 			<div class="row">
