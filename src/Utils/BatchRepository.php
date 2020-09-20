@@ -1,8 +1,9 @@
 <?php namespace Lightmessage\Utils;
 
 use Exception;
-use SleekDB;
+use Lightmessage\Models\Batch;
 use Lightmessage\Models\Message;
+use SleekDB\SleekDB;
 
 /**
  * Respository in charge of Data persistence
@@ -22,12 +23,19 @@ class BatchRepository {
 
 	/**
 	 * Get list of offers
+	 * @param string $table
 	 * @param int $limit
 	 * @return array
 	 */
-	public function fetch( $limit = 3 ) {
-		$result = [];
-		return $result;
+	public function fetch( $table, $limit = 3 ) {
+		try {
+			$db = $this->getTableData( $table );
+			return $db
+					->limit( $limit )
+					->fetch( $table );
+		} catch ( Exception $e ) {
+			return [];
+		}
 	}
 
 	/**
@@ -68,7 +76,8 @@ class BatchRepository {
 	 * @return void
 	 */
 	private function getTableData( $table ) {
-		$dataDir = dirname( __DIR__ ) . "/db";
+		$dataDir = dirname( __DIR__ ) . "/../database";
 		$tableData = SleekDB::store( $table, $dataDir );
+		return $tableData;
 	}
 }

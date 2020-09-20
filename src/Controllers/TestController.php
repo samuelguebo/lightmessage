@@ -1,9 +1,7 @@
 <?php namespace Lightmessage\Controllers;
 
 use Exception;
-use Lightmessage\Utils\OAuth;
 use Lightmessage\Models\Batch;
-use Lightmessage\Utils\MediaWiki;
 use Lightmessage\Utils\BatchRepository;
 
 /**
@@ -20,37 +18,10 @@ class TestController extends AbstractController {
 		try {
 			$repository = new BatchRepository;
 			$batch = new Batch( 'CI opt-in notification (ES)', '* {{target | page = User talk:Samuel (WMF) | site = fr.wikipedia.org}}' );
-			$repository->createBatch( $batch );
+			// $repository->createBatch( $batch );
+			print_r( $repository->fetch( 'batch' ) );
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}
-	}
-
-	/**
-	 * Mock upload to mediawiki
-	 *
-	 * @param mixed $request
-	 * @return void
-	 */
-	public function upload( $request ) {
-		header( "Content-Type: Application/json" );
-		// Handle error
-		$error_not_found = "An error occured during upload. Please try again.";
-		$files = $_FILES;
-		$data = filter_input_array( INPUT_POST );
-		if ( !isset( $data ) ) {
-			$message['status'] = 200;
-			$message['message'] = $error_not_found;
-			echo json_encode( $message );
-			die();
-		}
-
-		// If there are no errors
-		$message['status'] = 200;
-		$message['message'] = "success";
-		$message['files'] = $data;
-		print_r( $message );
-		// echo json_encode( $message );
-		die();
 	}
 }

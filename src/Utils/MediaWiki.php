@@ -2,8 +2,8 @@
 
 use CURLFile;
 use Exception;
-use MediaWiki\OAuthClient\Token;
 use Lightmessage\Config\Settings;
+use MediaWiki\OAuthClient\Token;
 
 /**
  * Oauth mechanism largely inspired by Brad Jorsch's approach
