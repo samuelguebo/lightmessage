@@ -14,16 +14,12 @@ class HomeController extends AbstractController {
 	 * @return void
 	 */
 	public function index( $request = null ) {
-		define( 'APP_NAME', Settings::$APP_NAME );
-		define( 'APP_SLOGAN', Settings::$APP_SLOGAN );
-		define( 'APP_DESCRIPTION', Settings::$APP_DESCRIPTION );
-
 		if ( AuthController::isLoggedIn() ) {
 			$oauth = new OAuth();
 			$user = $oauth->getProfile()->query->userinfo;
-			require ROOT . "/src/Views/index.php";
+			require VIEW_DIR . "/home/index.php";
 		} else {
-			require ROOT . "/src/Views/logged-out.php";
+			require VIEW_DIR . "/home/logged-out.php";
 		}
 	}
 }

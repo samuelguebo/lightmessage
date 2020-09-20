@@ -21,11 +21,11 @@ class MediaWiki {
 	 * Edit a sandbox on Wikimedia Commons
 	 *
 	 * @param mixed $page Name space
-	 * @param mixed $title Section title
-	 * @param mixed $wikicode text in special markup (wikicode)
+	 * @param mixed $subject Section title
+	 * @param mixed $body text in special markup (wikicode)
 	 * @return string / error
 	 */
-	public function addMessage( $page, $title, $wikicode ) {
+	public function addMessage( $page, $subject, $body ) {
 		try {
 			$client = ( new OAuth() )->getClient();
 			$accessToken = new Token(
@@ -45,9 +45,9 @@ class MediaWiki {
 				'action' => 'edit',
 				'title' => $page,
 				'sectiontitle' => 'new',
-				'sectiontitle' => $title,
-				'text' => $wikicode,
-				'summary' => "/* $title */",
+				'sectiontitle' => $subject,
+				'text' => $body,
+				'summary' => "/* $subject */",
 				'watchlist' => 'nochange',
 				'token' => $token,
 			];

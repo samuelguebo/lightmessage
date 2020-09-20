@@ -1,5 +1,7 @@
 <?php namespace Lightmessage\Controllers;
 
+use Lightmessage\Config\Settings;
+
 /**
  * Abstract class for Controllers
  * it can be extended to create
@@ -25,6 +27,11 @@ abstract class AbstractController {
 				exit();
 			}
 		}
+
+		define( 'APP_NAME', Settings::$APP_NAME );
+		define( 'APP_SLOGAN', Settings::$APP_SLOGAN );
+		define( 'APP_DESCRIPTION', Settings::$APP_DESCRIPTION );
+		define( 'VIEW_DIR', dirname( __DIR__ ) . '/Views' );
 	}
 
 }

@@ -1,12 +1,12 @@
 <?php
-namespace Lightmessage\Models;
+page Lightmessage\Models;
 
 /**
  * Entity that holds a message
  * attached to a Batch list
  */
 class Message {
-	public $namespace;
+	public $page;
 	public $wiki;
 	public $listId;
 	public $status;
@@ -14,14 +14,14 @@ class Message {
 	/**
 	 * Default constructor
 	 *
-	 * @param string $namespace
+	 * @param string $page
 	 * @param string $wiki
 	 * @param string $listId
 	 * @param bool $status
 	 * @return void
 	 */
-	public function __construct( $namespace, $wiki, $listId, $status = false ) {
-		$this->namespace  = $namespace;
+	public function __construct( $page, $wiki, $listId, $status = false ) {
+		$this->page  = $page;
 		$this->wiki = $wiki;
 		$this->listId = $listId;
 		$this->status = $status;
