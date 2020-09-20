@@ -1,5 +1,5 @@
 
-# The Noun Uploader 
+# Light Message
 
 Lightweight utility for sending fine-grained notifications in small batches.
 
