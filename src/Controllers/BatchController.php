@@ -8,12 +8,22 @@ use Thenoun\Utils\OAuth;
  */
 class BatchController extends AbstractController {
 	/**
-	 * Rest endpoint for route `/`
+	 * Rest endpoint for route `/batch/create`
 	 * it matches GET requests
 	 * @param mixed $request
 	 * @return void
 	 */
-	public function index( $request = null ) {
-		require ROOT . "/src/Views/batch/index.php";
+	public function create( $request = null ) {
+		require ROOT . "/src/Views/batch/create.php";
+	}
+
+	/**
+	 * Rest endpoint for route `/batch/save`
+	 * it matches POST requests
+	 * @param mixed $request
+	 * @return void
+	 */
+	public function save( $request = null ) {
+		// Save data to Database
 	}
 }
