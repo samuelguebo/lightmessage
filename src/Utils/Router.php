@@ -1,8 +1,8 @@
 <?php
 
-namespace Thenoun\Utils;
+namespace Lightmessage\Utils;
 
-use Thenoun\Controllers\NotFoundController;
+use Lightmessage\Controllers\NotFoundController;
 
 /**
  * Router responsible for redirecting
@@ -33,7 +33,7 @@ class Router {
 			$endpoint = explode( "?", $this->request )[0];
 			if ( $route['endpoint'] === $endpoint ) {
 				// If class exists, use it
-				$class = "Thenoun\\Controllers\\" . $route['controller'];
+				$class = "Lightmessage\\Controllers\\" . $route['controller'];
 
 				if ( class_exists( $class ) ) {
 					$controller = ( new $class() );

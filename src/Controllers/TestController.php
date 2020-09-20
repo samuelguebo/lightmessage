@@ -1,8 +1,10 @@
-<?php namespace Thenoun\Controllers;
+<?php namespace Lightmessage\Controllers;
 
 use Exception;
-use Thenoun\Utils\MediaWiki;
-use Thenoun\Utils\OAuth;
+use Lightmessage\Utils\OAuth;
+use Lightmessage\Models\Batch;
+use Lightmessage\Utils\MediaWiki;
+use Lightmessage\Utils\BatchRepository;
 
 /**
  * Controller handling homepage
@@ -16,15 +18,9 @@ class TestController extends AbstractController {
 	 */
 	public function test( $request ) {
 		try {
-			$oauth = new OAuth();
-			if ( AuthController::isLoggedIn() ) {
-				$oauth = new OAuth();
-				$mediawiki = new MediaWiki();
-				$res = $mediawiki->editPage( 'File:Robot (699) - The Noun Project.svg', '' );
-				var_dump( $res );
-			} else {
-				require ROOT . "/src/Views/logged-out.php";
-			}
+			$repository = new BatchRepository;
+			$batch = new Batch( 'CI opt-in notification (ES)', '* {{target | page = User talk:Samuel (WMF) | site = fr.wikipedia.org}}' );
+			$repository->createBatch( $batch );
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}

@@ -1,7 +1,7 @@
-<?php namespace Thenoun\Controllers;
+<?php namespace Lightmessage\Controllers;
 
-use Thenoun\Config\Settings;
-use Thenoun\Utils\OAuth;
+use Lightmessage\Config\Settings;
+use Lightmessage\Utils\OAuth;
 
 /**
  * Controller handling homepage

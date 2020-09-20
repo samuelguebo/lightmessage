@@ -9,7 +9,7 @@
     }],
     "autoload": {
         "psr-4": {
-            "Thenoun\\": "src/"
+            "Lightmessage\\": "src/"
         }
     },
     "require": {

@@ -1,7 +1,7 @@
 <?php
 
-use Thenoun\Config\Settings;
-use Thenoun\Utils\Router;
+use Lightmessage\Config\Settings;
+use Lightmessage\Utils\Router;
 
 /**
  * Main entry point for the application

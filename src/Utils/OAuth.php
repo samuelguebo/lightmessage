@@ -1,11 +1,11 @@
-<?php namespace Thenoun\Utils;
+<?php namespace Lightmessage\Utils;
 
 use Exception;
 use MediaWiki\OAuthClient\Client;
 use MediaWiki\OAuthClient\ClientConfig;
 use MediaWiki\OAuthClient\Consumer;
 use MediaWiki\OAuthClient\Token;
-use Thenoun\Config\Settings;
+use Lightmessage\Config\Settings;
 
 /**
  * OAuth interacting with MediaWiki-based API

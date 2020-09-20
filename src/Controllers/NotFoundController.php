@@ -1,6 +1,6 @@
 <?php
 
-namespace Thenoun\Controllers;
+namespace Lightmessage\Controllers;
 
 /**
  * REST Controller for Job entities

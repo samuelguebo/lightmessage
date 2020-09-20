@@ -1,7 +1,8 @@
-<?php namespace Thenoun\Utils;
+<?php namespace Lightmessage\Utils;
 
-use Thenoun\Models\Message;
-use Thenoun\Config\Settings;
+use Exception;
+use SleekDB;
+use Lightmessage\Models\Message;
 
 /**
  * Respository in charge of Data persistence
@@ -30,21 +31,44 @@ class BatchRepository {
 	}
 
 	/**
-	 * Save
+	 * Save message
 	 * @param Message $message
 	 * @return void
 	 */
-	public function create( Message $message ) {
+	public function createMessage( Message $message ) {
 		$error = false;
-		return $error;
+		try {
+			$db = $this->getTableData( 'message' );
+			$data = (array)$message;
+			return $db->insert( $data );
+		} catch ( Exception $e ) {
+			return $error;
+		}
 	}
 
 	/**
-	 * getDatabase
-	 *
+	 * Save batch
+	 * @param Batch $batch
 	 * @return void
 	 */
-	private function getDatabase() {
+	public function createBatch( Batch $batch ) {
+		$error = false;
+		try {
+			$db = $this->getTableData( 'batch' );
+			$data = (array)$batch;
+			return $db->insert( $data );
+		} catch ( Exception $e ) {
+			return $error;
+		}
+	}
+
+	/**
+	 * getTableData
+	 * @param string $table
+	 * @return void
+	 */
+	private function getTableData( $table ) {
 		$dataDir = dirname( __DIR__ ) . "/db";
-	}	
+		$tableData = SleekDB::store( $table, $dataDir );
+	}
 }

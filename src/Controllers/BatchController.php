@@ -1,4 +1,4 @@
-<?php namespace Thenoun\Controllers;
+<?php namespace Lightmessage\Controllers;
 
 /**
  * Controller handling message batches

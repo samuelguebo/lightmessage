@@ -1,5 +1,5 @@
 <?php
-namespace Thenoun\Models;
+namespace Lightmessage\Models;
 
 /**
  * Entity that holds the data for processed

@@ -1,4 +1,4 @@
-<?php namespace Thenoun\Utils;
+<?php namespace Lightmessage\Utils;
 
 /**
  * Router responsible for redirecting

@@ -1,9 +1,9 @@
-<?php namespace Thenoun\Utils;
+<?php namespace Lightmessage\Utils;
 
 use CURLFile;
 use Exception;
 use MediaWiki\OAuthClient\Token;
-use Thenoun\Config\Settings;
+use Lightmessage\Config\Settings;
 
 /**
  * Oauth mechanism largely inspired by Brad Jorsch's approach
