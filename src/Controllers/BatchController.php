@@ -1,8 +1,5 @@
 <?php namespace Thenoun\Controllers;
 
-use Thenoun\Config\Settings;
-use Thenoun\Utils\OAuth;
-
 /**
  * Controller handling message batches
  */

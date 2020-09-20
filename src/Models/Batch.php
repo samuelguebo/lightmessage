@@ -3,7 +3,7 @@ namespace Thenoun\Models;
 
 /**
  * Entity that holds the data for processed
- * and passed to the Mediawiki API
+ * and related to a batch list
  */
 class Batch {
 	public $title;

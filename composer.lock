@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a68331a16945adea4b1cc01a303b4891",
+    "content-hash": "661012928f3e31100dcd1b0de3872475",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -858,6 +858,53 @@
                 "psr-3"
             ],
             "time": "2020-03-23T09:12:05+00:00"
+        },
+        {
+            "name": "rakibtg/sleekdb",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rakibtg/SleekDB.git",
+                "reference": "e18c7b865bf84b32214bfeb5044d495c96d12079"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rakibtg/SleekDB/zipball/e18c7b865bf84b32214bfeb5044d495c96d12079",
+                "reference": "e18c7b865bf84b32214bfeb5044d495c96d12079",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SleekDB\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rakibtg",
+                    "email": "rakibtg@gmail.com"
+                }
+            ],
+            "description": "SleekDB - A 30Kb NoSQL Database made using PHP",
+            "keywords": [
+                "SleekDB",
+                "api",
+                "database",
+                "flatfile",
+                "framework",
+                "micro",
+                "nosql",
+                "php",
+                "rest"
+            ],
+            "time": "2020-07-31T10:58:57+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
