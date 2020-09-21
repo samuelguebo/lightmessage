@@ -2,6 +2,7 @@
 
 namespace Lightmessage\Utils;
 
+use Lightmessage\Config\Settings;
 use Lightmessage\Controllers\NotFoundController;
 
 /**
@@ -31,9 +32,10 @@ class Router {
 	public function dispatch() {
 		foreach ( $this->routes as $route ) {
 			$endpoint = explode( "?", $this->request )[0];
+			$endpoint = preg_replace( '/\/\d+(\/)?/', '/{param}/', $endpoint );
 			if ( $route['endpoint'] === $endpoint ) {
 				// If class exists, use it
-				$class = "Lightmessage\\Controllers\\" . $route['controller'];
+				$class = Settings::$NAMESPACE . "\\Controllers\\" . $route['controller'];
 
 				if ( class_exists( $class ) ) {
 					$controller = ( new $class() );
@@ -106,4 +108,19 @@ class Router {
 			session_destroy();
 		}
 	}
+
+	/**
+	 * Extract parameter from endpoint
+	 * @param string $endpoint
+	 * @return string
+	 */
+	public static function getParam( $endpoint ) {
+		$param = "";
+		$parts = explode( "/", $endpoint );
+			if ( count( $parts ) > 0 ) {
+				$param = $parts[ count( $parts ) - 1 ];
+			}
+		return $param;
+	}
+
 }
