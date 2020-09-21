@@ -11,8 +11,8 @@
 	<hr>
 	<section class="batches">
 		<?php if ( !empty( $batches ) ) {?>
-			<h5 class="title">Current list of batches (<?php echo count( $batches ) ?>)</h5>
-			<table id="batches-table" class="table table-striped sortable">
+			<h5 class="title">View existing batches (<?php echo count( $batches ) ?>)</h5>
+			<table id="batches-table" class="table table-striped">
 			<tbody>
 				<?php foreach ( $batches as $batch ) {?>
 					<tr>
@@ -29,5 +29,4 @@
 		<?php } ?>
 	</section>
 
-	<script src="public/js/script.js"></script>
 <?php require_once VIEW_DIR . '/footer.php';

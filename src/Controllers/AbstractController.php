@@ -20,18 +20,20 @@ abstract class AbstractController {
 	 * @return void
 	 */
 	public function middleWare( $route, $request ) {
+		define( 'APP_NAME', Settings::$APP_NAME );
+		define( 'APP_SLOGAN', Settings::$APP_SLOGAN );
+		define( 'APP_DESCRIPTION', Settings::$APP_DESCRIPTION );
+		define( 'VIEW_DIR', dirname( __DIR__ ) . '/Views' );
+
 		// Check wether wether user is logged in or not
+		define( 'IS_LOGGEDIN', AuthController::isLoggedIn() );
+
 		if ( ( $route['protected'] ) ) {
 			if ( !AuthController::isLoggedIn() ) {
 				AuthController::unauthorized( $request );
 				exit();
 			}
 		}
-
-		define( 'APP_NAME', Settings::$APP_NAME );
-		define( 'APP_SLOGAN', Settings::$APP_SLOGAN );
-		define( 'APP_DESCRIPTION', Settings::$APP_DESCRIPTION );
-		define( 'VIEW_DIR', dirname( __DIR__ ) . '/Views' );
 	}
 
 }

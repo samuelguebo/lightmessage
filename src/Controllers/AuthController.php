@@ -46,7 +46,7 @@ class AuthController extends AbstractController {
 	 * @return void
 	 */
 	public static function unauthorized( $request ) {
-		require ROOT . "/src/views/logged-out.php";
+		require VIEW_DIR . "/home/logged-out.php";
 	}
 
 	/**

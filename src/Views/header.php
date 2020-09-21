@@ -27,9 +27,11 @@
 		<div class="navbar-nav">
 		<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
 		<a class="nav-item nav-link" href="/about">About</a>
-		<a class="nav-item nav-link" href="/batch/create"><i class="fa fa-pencil-square-o"></i> New batch</a>
-		</div>
-		<a href="./logout" class="btn btn-success btn-logout"><i class="fa fa-sign-out"></i> Logout</a>
+		<?php if ( IS_LOGGEDIN ) {?>
+			<a class="nav-item nav-link" href="/batch/create"><i class="fa fa-pencil-square-o"></i> New batch</a>
+			</div>
+			<a href="/logout" class="btn btn-success btn-logout"><i class="fa fa-sign-out"></i> Logout</a>
+		<?php }?>
 	</div>
 </nav>
 <section class="container boxed">

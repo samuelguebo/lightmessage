@@ -14,7 +14,7 @@ class HomeController extends AbstractController {
 	 * @return void
 	 */
 	public function index( $request = null ) {
-		if ( AuthController::isLoggedIn() ) {
+		if ( IS_LOGGEDIN ) {
 			$oauth = new OAuth();
 			$user = $oauth->getProfile();
 			$batches = ( new BatchRepository )->fetch( 'batch', 1000 );
@@ -23,5 +23,16 @@ class HomeController extends AbstractController {
 		} else {
 			require VIEW_DIR . "/home/logged-out.php";
 		}
+	}
+
+	/**
+	 * Rest endpoint for route `/about`
+	 * it matches GET requests
+	 * @param mixed $request
+	 * @return void
+	 */
+	public function about( $request = null ) {
+			require VIEW_DIR . "/home/about.php";
+
 	}
 }

@@ -27,7 +27,7 @@
 
 				<!-- Body -->
 				<div class="form-group">
-					<textarea name="body" class="form-control" rows="5" cols="80" placeholder="Insert email body here"></textarea>
+					<textarea name="body" class="form-control" rows="5" cols="80" placeholder="Insert message body here"></textarea>
 				</div>
 
 			<br>
