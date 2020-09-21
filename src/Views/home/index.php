@@ -6,7 +6,7 @@
 ?>
 <?php require_once VIEW_DIR . '/header.php'; ?>
 	
-	<h1>Akwaba, <?php echo $user->name; ?>. 
+	<h1>Akwaba, <?php echo $user; ?>. 
 	<a href="./logout" class="btn btn-success btn-logout"><i class="fa fa-sign-out"></i> Logout</a></h1>
 	<p class="lead"><?php echo APP_DESCRIPTION; ?></p>
 	<hr>

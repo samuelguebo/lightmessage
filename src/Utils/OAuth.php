@@ -33,6 +33,11 @@ class OAuth {
 	 * @return void
 	 */
 	public function getProfile() {
+		// Leverage cookie
+		if ( !empty( Router::getCookie( 'userinfo' ) ) ) {
+			return Router::getCookie( 'userinfo' );
+		}
+
 		$client = $this->getClient();
 		$accessToken = new Token(
 			Router::getCookie( 'accessToken' ),
@@ -66,6 +71,9 @@ class OAuth {
 
 		// Identify
 		$ident = $client->identify( $accessToken );
+
+		// Save to cookie
+		Router::setcookie( 'userinfo', $res->query->userinfo->name );
 		return $res;
 	}
 

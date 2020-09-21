@@ -16,10 +16,10 @@ class HomeController extends AbstractController {
 	public function index( $request = null ) {
 		if ( AuthController::isLoggedIn() ) {
 			$oauth = new OAuth();
-			$user = $oauth->getProfile()->query->userinfo;
+			$user = $oauth->getProfile();
 			$batches = ( new BatchRepository )->fetch( 'batch', 1000 );
-			print_r( $batches );
-			// require VIEW_DIR . "/home/index.php";
+			// print_r( $batches );
+			require VIEW_DIR . "/home/index.php";
 		} else {
 			require VIEW_DIR . "/home/logged-out.php";
 		}
