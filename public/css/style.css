@@ -138,3 +138,22 @@ table.sortable tbody tr::before {
 .messages {
 	margin-top: 10px;
 }
+
+/**
+ * Sending messages
+ */
+.sendButton {
+	position: fixed;
+	bottom: 30%;
+	right: 100px;
+	padding: 10px 14px;
+	background: #28a745;
+	border-radius: 40px;
+	display: block;
+	color: #FFF;
+}
+
+.sendButton:hover {
+	cursor: pointer;
+	background: #ffc107;
+}
