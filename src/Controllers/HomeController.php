@@ -1,6 +1,6 @@
 <?php namespace Lightmessage\Controllers;
 
-use Lightmessage\Config\Settings;
+use Lightmessage\Utils\BatchRepository;
 use Lightmessage\Utils\OAuth;
 
 /**
@@ -17,7 +17,9 @@ class HomeController extends AbstractController {
 		if ( AuthController::isLoggedIn() ) {
 			$oauth = new OAuth();
 			$user = $oauth->getProfile()->query->userinfo;
-			require VIEW_DIR . "/home/index.php";
+			$batches = ( new BatchRepository )->fetch( 'batch', 1000 );
+			print_r( $batches );
+			// require VIEW_DIR . "/home/index.php";
 		} else {
 			require VIEW_DIR . "/home/logged-out.php";
 		}

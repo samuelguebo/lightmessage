@@ -11,7 +11,7 @@ class BatchController extends AbstractController {
 	 * @return void
 	 */
 	public function create( $request = null ) {
-		require ROOT . "/src/Views/batch/create.php";
+		require VIEW_DIR . "/batch/create.php";
 	}
 
 	/**
