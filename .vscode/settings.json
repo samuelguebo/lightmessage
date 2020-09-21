@@ -27,5 +27,7 @@
   "php-cs-fixer.autoFixByBracket": true,
   "php-cs-fixer.autoFixBySemicolon": false,
   "php-cs-fixer.formatHtml": false,
-  "php-cs-fixer.documentFormattingProvider": true
+  "php-cs-fixer.documentFormattingProvider": true,
+  "fileheader.Author": "Samuel Guebo",
+  "fileheader.LastModifiedBy": "Samuel Guebo"
 }

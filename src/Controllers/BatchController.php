@@ -24,4 +24,16 @@ class BatchController extends AbstractController {
 		// Save data to Database
 	}
 
+	/**
+	 * Rest endpoint for route `/batch/view`
+	 * it matches GET requests
+	 * @param mixed $request
+	 * @return void
+	 */
+	public function view( $request = null ) {
+		print_r($request);
+		//$batchId = $_GET['']
+		//$batch = ( new BatchRepository )->getBatchById( 'batch', 1000 );
+		//require VIEW_DIR . "/batch/view.php";
+	}
 }
