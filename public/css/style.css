@@ -22,20 +22,13 @@ body {
 }
 
 /* Button and controllers*/
-.steps-buttons {
-	margin-top: 10px;
+.batch .btn-update {
+	display: inline-block;
+	margin-left: 20px;
 }
 
-.steps-buttons #prev-button {
-	display: none;
-}
-
-.steps-buttons button:first-child {
-	margin-right: 5px;
-}
-
-.steps-blocks .details .card {
-	margin-bottom: 20px;
+.navbar .btn-logout {
+	float: right;
 }
 
 #next-button {
@@ -97,65 +90,4 @@ p.tou-description {
 	font-size: 1em;
 	color: #444;
 	margin-top: 24px;
-}
-
-.steps-blocks .confirm {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.steps-blocks .confirm .alert {
-	display: none;
-}
-
-.steps-pagination {
-	display: flex;
-	align-items: center;
-	justify-content: left;
-	margin-bottom: 20px;
-}
-
-.steps-pagination a {
-	position: relative;
-	padding: 4px 20px;
-	border-radius: 20px;
-	border: solid 1px;
-	margin-right: 30px;
-	min-width: 34px;
-	text-decoration: none;
-}
-
-.steps-pagination a:after {
-	content: "";
-	border-bottom: solid 1px;
-	width: 30px;
-	height: 1px;
-	position: absolute;
-	top: 50%;
-	right: -31px;
-}
-
-.steps-pagination a:last-child:after {
-	display: none;
-}
-
-.steps-pagination a {
-	color: #cecece;
-}
-
-.steps-blocks .step {
-	display: none;
-}
-
-.steps-blocks .active {
-	display: block;
-}
-
-.steps-pagination a.active {
-	color: #007bff;
-}
-
-.steps-blocks .notify .error {
-	color: #df1414;
 }

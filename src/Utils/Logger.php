@@ -17,6 +17,6 @@ class Logger {
 		if ( is_object( $data ) || is_array( $data ) ) {
 			$data = json_encode( $data );
 		}
-		echo ( "<script>console.log('" . $data . "')</script>" );
+		echo ( "<script>console.log(`" . $data . "`)</script>" );
 	}
 }

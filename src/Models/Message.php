@@ -1,5 +1,5 @@
 <?php
-page Lightmessage\Models;
+namespace Lightmessage\Models;
 
 /**
  * Entity that holds a message
@@ -8,7 +8,7 @@ page Lightmessage\Models;
 class Message {
 	public $page;
 	public $wiki;
-	public $listId;
+	public $batchId;
 	public $status;
 
 	/**
@@ -16,14 +16,14 @@ class Message {
 	 *
 	 * @param string $page
 	 * @param string $wiki
-	 * @param string $listId
+	 * @param string $batchId
 	 * @param bool $status
 	 * @return void
 	 */
-	public function __construct( $page, $wiki, $listId, $status = false ) {
+	public function __construct( $page, $wiki, $batchId, $status = false ) {
 		$this->page  = $page;
 		$this->wiki = $wiki;
-		$this->listId = $listId;
+		$this->batchId = $batchId;
 		$this->status = $status;
 	}
 }

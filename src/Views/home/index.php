@@ -6,8 +6,7 @@
 ?>
 <?php require_once VIEW_DIR . '/header.php'; ?>
 	
-	<h1>Akwaba, <?php echo $user; ?>. 
-	<a href="./logout" class="btn btn-success btn-logout"><i class="fa fa-sign-out"></i> Logout</a></h1>
+	<h1>Akwaba, <?php echo $user; ?>.</h1>
 	<p class="lead"><?php echo APP_DESCRIPTION; ?></p>
 	<hr>
 	<section class="batches">
@@ -25,7 +24,7 @@
 		
 		<?php } else { ?>
 			<div class="alert alert-warning" role="alert">
-				There seem to be no batches yet. You can go ahead and <a href="/batch/create">create one now</a>.
+				There seems to be no batches yet. You can go ahead and <a href="/batch/create">create one now</a>.
 			</div>
 		<?php } ?>
 	</section>

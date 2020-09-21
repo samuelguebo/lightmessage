@@ -36,8 +36,12 @@ class TestController extends AbstractController {
 				Clique [[:es:User:African Hope|ici pour visiter]] un lien. 
 				"
 			 );
+			 $wikicode = "* {{target | page = User talk:Samuel (WMF) | site = ja.wikipedia.org}}
+			 * {{target | page = User talk:Samuel (WMF) | site = ar.wikipedia.org}}
+			 * {{target | page = User talk:Samuel (WMF) | site = fr.wikipedia.org}}";
+
 			 // $repository->createBatch( $batchFR );
-			print_r( $repository->fetch( 'batch' ) );
+			// print_r( $repository->fetch( 'batch' ) );
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}
