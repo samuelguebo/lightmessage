@@ -77,7 +77,7 @@ class BatchRepository {
 
 	/**
 	 * Assert whether message exists in Database
-	 * @param int $messageId
+	 * @param Object $message
 	 * @return array
 	 */
 	public function messageExists( $message ) {
@@ -226,7 +226,7 @@ class BatchRepository {
 		$messages = [];
 		$lines = explode( "\n", $wikicode );
 		foreach ( $lines as $line ) {
-		   preg_match( '/page = (.*) \| site = (.*)[ ]?}}/', $line, $matches );
+		   preg_match( '/page =*(.*).\| site =*(.*).}}/', $line, $matches );
 		   if ( count( $matches ) > 1 ) {
 			   $page = $matches[1];
 			   $wiki = $matches[2];

@@ -20,6 +20,7 @@ require_once ROOT . '/src/Views/header.php';?>
 		<thead>
 			<tr>
 				<!-- <th>#</th> -->
+				<th class="sorttable_nosort"></th>
 				<th>Page</th>
 				<th>Wiki</th>
 				<th>Status</th>
@@ -27,7 +28,8 @@ require_once ROOT . '/src/Views/header.php';?>
 		</thead>
 		<tbody>
 			<?php foreach ( $messages as $message ) {?>
-				<tr>
+				<tr id="message-<?php echo $message['_id'];?>>">
+					<td><input type="checkbox" name="<?php echo $message['_id'];?>"></td>
 					<td><?php echo $message['page']?></td>
 					<td><?php echo $message['wiki']?></td>
 					<td><?php echo $message['status'] === true ? "delivered" : "pending"; ?></td>
