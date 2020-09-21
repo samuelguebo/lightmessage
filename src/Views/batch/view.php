@@ -5,7 +5,7 @@
 require_once ROOT . '/src/Views/header.php';?>
  
  <section class="batch">
-	<h1><?php echo $batch['title'];?> <a href="/batch/edit/<?php echo $batch['_id']?>" class="btn btn-warning btn-sm btn-update"><i class="fa fa-edit"></i> Update</a></h1>
+	<h3><?php echo $batch['title'];?> <a href="/batch/update/<?php echo $batch['_id']?>" class="btn btn-warning btn-sm btn-update"><i class="fa fa-edit"></i> Edit</a></h3>
 	<div class="card">
 		<div class="card-body">
 		<span class="badge badge-success">content</span>
@@ -38,9 +38,13 @@ require_once ROOT . '/src/Views/header.php';?>
 	
 	<?php } else { ?>
 		<div class="alert alert-warning" role="alert">
-			There seems to be no messages yet./a>.
+			There seems to be no messages yet.
 		</div>
 	<?php } ?>
 </section>
+
+<!-- floating button -->
+<div class="sendButton"><i class="fa fa-paper-plane"></i></div>
+
  <?php
 require_once ROOT . '/src/Views/footer.php';

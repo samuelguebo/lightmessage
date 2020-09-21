@@ -33,6 +33,5 @@ class HomeController extends AbstractController {
 	 */
 	public function about( $request = null ) {
 			require VIEW_DIR . "/home/about.php";
-
 	}
 }

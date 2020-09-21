@@ -6,6 +6,7 @@ namespace Lightmessage\Models;
  * and related to a batch list
  */
 class Batch {
+	public $id;
 	public $title;
 	public $wikicode;
 	public $subject;
@@ -25,5 +26,15 @@ class Batch {
 		$this->wikicode = $wikicode;
 		$this->subject = $subject;
 		$this->body = $body;
+	}
+
+	/**
+	 * Setter for Id
+	 *
+	 * @param mixed $id
+	 * @return void
+	 */
+	public function setId( $id ) {
+		$this->id = $id;
 	}
 }

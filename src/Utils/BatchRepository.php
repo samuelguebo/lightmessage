@@ -46,11 +46,50 @@ class BatchRepository {
 	public function getBatchById( $batchId ) {
 		try {
 			$db = $this->getTableData( 'batch' );
-			return $db
+			$res = $db
 					->where( '_id', '=', $batchId )
-					->fetch()[0];
+					->fetch();
+			if ( isset( $res[0] ) ) {
+				return $res[0];
+			} else {
+				throw new Exception();
+			}
 		} catch ( Exception $e ) {
 			return [];
+		}
+	}
+
+	/**
+	 * Assert whether batch exists in Database
+	 * @param int $batchId
+	 * @return array
+	 */
+	public function batchExistsById( $batchId ) {
+		try {
+			$db = $this->getTableData( 'batch' );
+			return count( $db
+					->where( '_id', '=', $batchId )
+					->fetch() ) > 0;
+		} catch ( Exception $e ) {
+			return false;
+		}
+	}
+
+	/**
+	 * Assert whether message exists in Database
+	 * @param int $messageId
+	 * @return array
+	 */
+	public function messageExists( $message ) {
+		try {
+			$db = $this->getTableData( 'message' );
+			return count( $db
+					->where( 'page', '=', $message->page )
+					->where( 'wiki', '=', $message->wiki )
+					->where( 'batchId', '=', $message->batchId )
+					->fetch() ) > 0;
+		} catch ( Exception $e ) {
+			return false;
 		}
 	}
 
@@ -97,7 +136,80 @@ class BatchRepository {
 		try {
 			$db = $this->getTableData( 'batch' );
 			$data = (array)$batch;
-			return $db->insert( $data );
+			$res = $db->insert( $data );
+
+			// Get child messages from wikicode list
+			$childMessages = $this->wikicodeToMessages( $res['wikicode'], $res['_id'] );
+			// Logger::log( [ 'childMessages', $childMessages ] );
+			foreach ( $childMessages as $message ) {
+				$message->setStatus( false );
+				$this->createMessage( $message );
+			}
+
+			return $res;
+		} catch ( Exception $e ) {
+			return $error;
+		}
+	}
+
+	/**
+	 * Switch between create or update operations
+	 * @param Batch $batch
+	 * @return mixed
+	 */
+	public function createOrUpdateBatch( Batch $batch ) {
+		if ( $this->batchExistsById( $batch->id ) ) {
+			return $this->updateBatch( $batch );
+		} else {
+			return $this->createBatch( $batch );
+		}
+	}
+
+	/**
+	 * Update batch
+	 * @param Batch $batch
+	 * @return void
+	 */
+	public function updateBatch( Batch $batch ) {
+		$error = false;
+		try {
+			$db = $this->getTableData( 'batch' );
+			$data = (array)$batch;
+
+			$res = $db
+					->where( '_id', '=', $batch->id )
+					->update( $data );
+
+			// Update existing childMessages
+			$childMessages = $this->wikicodeToMessages( $batch->wikicode, $batch->id );
+			foreach ( $childMessages as $message ) {
+				if ( !$this->messageExists( $message ) ) {
+					$this->createMessage( $message );
+				} else {
+					$this->updateMessage( $message );
+				}
+			}
+		} catch ( Exception $e ) {
+			return $error;
+		}
+	}
+
+	/**
+	 * Update message
+	 * @param Message $message
+	 * @return void
+	 */
+	public function updateMessage( Message $message ) {
+		$error = false;
+		try {
+			$db = $this->getTableData( 'message' );
+			$data = (array)$message;
+
+			return $db
+					->where( 'page', '=', $message->page )
+					->where( 'wiki', '=', $message->wiki )
+					->where( 'batchId', '=', $message->batchId )
+					->update( $data );
 		} catch ( Exception $e ) {
 			return $error;
 		}
@@ -121,7 +233,7 @@ class BatchRepository {
 			   $messages[] = new Message( $page, $wiki, $batchId );
 		   }
 		}
-		// Logger::log( [ '$messages', $messages ] );
+
 		return $messages;
 	}
 

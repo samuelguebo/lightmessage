@@ -17,13 +17,22 @@ class Message {
 	 * @param string $page
 	 * @param string $wiki
 	 * @param string $batchId
-	 * @param bool $status
 	 * @return void
 	 */
-	public function __construct( $page, $wiki, $batchId, $status = false ) {
+	public function __construct( $page, $wiki, $batchId ) {
 		$this->page  = $page;
 		$this->wiki = $wiki;
 		$this->batchId = $batchId;
+	}
+
+	/**
+	 * Setter for status
+	 *
+	 * @param mixed $status
+	 * @return void
+	 */
+	public function setStatus( $status ) {
 		$this->status = $status;
 	}
+
 }
