@@ -39,6 +39,23 @@ class BatchRepository {
 	}
 
 	/**
+	 * Get a batch based on its Id
+	 * @param string $table
+	 * @param int $batchId
+	 * @return array
+	 */
+	public function getBatchById( $table, $batchId ) {
+		try {
+			$db = $this->getTableData( $table );
+			return $db
+					->where( '_id', '=', $batchId )
+					->fetch();
+		} catch ( Exception $e ) {
+			return [];
+		}
+	}
+
+	/**
 	 * Save message
 	 * @param Message $message
 	 * @return void

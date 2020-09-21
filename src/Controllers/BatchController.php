@@ -1,6 +1,7 @@
 <?php namespace Lightmessage\Controllers;
 
 use Lightmessage\Utils\Router;
+use Lightmessage\Utils\BatchRepository;
 
 /**
  * Controller handling message batches
@@ -34,8 +35,7 @@ class BatchController extends AbstractController {
 	 */
 	public function view( $request = null ) {
 		$batchId = Router::getParam( $request );
-		print_r( $batchId );
-		// $batch = ( new BatchRepository )->getBatchById( 'batch', 1000 );
-		//require VIEW_DIR . "/batch/view.php";
+		$batch = ( new BatchRepository )->getBatchById( 'batch', $batchId );
+		require VIEW_DIR . "/batch/view.php";
 	}
 }
