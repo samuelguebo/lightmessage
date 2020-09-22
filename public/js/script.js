@@ -22,7 +22,24 @@ let sendButton = document.getElementById('sendButton')
  * and return response
  * @param {Message} message 
  */
-const sendMessage = (message) => {}
+const sendMessage = (message) => {
+
+    let formData = new FormData();
+    formData.append("data", JSON.stringify(message))
+    // console.log(`sending ${JSON.stringify(message)}`)
+    let messageIndicator = document.getElementById(`message-${message.id}`)
+    messageIndicator.classList.add('sending')
+    fetch('/message/send', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            messageIndicator.classList.remove('sending')
+            console.log(data)
+        })
+        .catch(e => console.log(e))
+}
 
 /**
  * Collecting data from all the table rows
@@ -86,10 +103,12 @@ const isset = (object) => {
 
 const setSendButtonListener = () => {
     if (isset(sendButton)) {
-        sendButton.addEventListener('click', (e) => {
+        sendButton.addEventListener('click', async (e) => {
             e.preventDefault();
             let messages = getSelectedMessages();
-            console.log(messages)
+            for (message of messages) {
+                await sendMessage(message)
+            }
         })
     }
 }

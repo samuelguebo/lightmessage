@@ -60,6 +60,27 @@ class BatchRepository {
 	}
 
 	/**
+	 * Get a message based on its Id
+	 * @param int $messageId
+	 * @return array
+	 */
+	public function getMessageById( $messageId ) {
+		try {
+			$db = $this->getTableData( 'message' );
+			$res = $db
+					->where( '_id', '=', $messageId )
+					->fetch();
+			if ( isset( $res[0] ) ) {
+				return $res[0];
+			} else {
+				throw new Exception();
+			}
+		} catch ( Exception $e ) {
+			return [];
+		}
+	}
+
+	/**
 	 * Assert whether batch exists in Database
 	 * @param int $batchId
 	 * @return array
@@ -139,7 +160,7 @@ class BatchRepository {
 			$res = $db->insert( $data );
 
 			// Get child messages from wikicode list
-			$childMessages = $this->wikicodeToMessages( $res['wikicode'], $res['_id'] );
+			$childMessages = $this->wikicodeToMessages( $res['wikicode'], $res['_id'], $res['author'] );
 			// Logger::log( [ 'childMessages', $childMessages ] );
 			foreach ( $childMessages as $message ) {
 				$message->setStatus( false );
@@ -199,7 +220,7 @@ class BatchRepository {
 					->update( $data );
 
 			// Update existing childMessages
-			$childMessages = $this->wikicodeToMessages( $batch->wikicode, $batch->id );
+			$childMessages = $this->wikicodeToMessages( $batch->wikicode, $batch->id, $batch->author );
 			foreach ( $childMessages as $message ) {
 				if ( !$this->messageExists( $message ) ) {
 					$this->createMessage( $message );
@@ -239,17 +260,18 @@ class BatchRepository {
 	 *
 	 * @param string $wikicode
 	 * @param string $batchId
+	 * @param string $author
 	 * @return array list of Message ojects
 	 */
-	public function wikicodeToMessages( $wikicode, $batchId ) {
+	public function wikicodeToMessages( $wikicode, $batchId, $author ) {
 		$messages = [];
 		$lines = explode( "\n", $wikicode );
 		foreach ( $lines as $line ) {
 		   preg_match( '/=(.*).*\|.*=(.*).*}}/', $line, $matches );
 		   if ( count( $matches ) > 1 ) {
-			   $page = $matches[1];
-			   $wiki = $matches[2];
-			   $messages[] = new Message( $page, $wiki, $batchId );
+			   $page = trim( $matches[1] );
+			   $wiki = trim( $matches[2] );
+			   $messages[] = new Message( $page, $wiki, $batchId, $author );
 		   }
 		}
 

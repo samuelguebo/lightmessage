@@ -1,6 +1,8 @@
 <?php
 namespace Lightmessage\Models;
 
+use Exception;
+
 /**
  * Entity that holds a message
  * attached to a Batch list
@@ -8,8 +10,10 @@ namespace Lightmessage\Models;
 class Message {
 	public $page;
 	public $wiki;
-	public $batchId;
 	public $status;
+	public $author;
+	public $batchId;
+	public $id;
 
 	/**
 	 * Default constructor
@@ -17,12 +21,14 @@ class Message {
 	 * @param string $page
 	 * @param string $wiki
 	 * @param string $batchId
+	 * @param string $author
 	 * @return void
 	 */
-	public function __construct( $page, $wiki, $batchId ) {
+	public function __construct( $page, $wiki, $batchId, $author ) {
 		$this->page  = $page;
 		$this->wiki = $wiki;
 		$this->batchId = $batchId;
+		$this->author = $author;
 	}
 
 	/**
@@ -35,4 +41,30 @@ class Message {
 		$this->status = $status;
 	}
 
+	/**
+	 * Setter for id
+	 *
+	 * @param mixed $id
+	 * @return void
+	 */
+	public function setId( $id ) {
+		$this->id = $id;
+	}
+
+	/**
+	 * fromArray
+	 *
+	 * @param mixed $message
+	 * @return void
+	 */
+	public static function fromArray( $message ) {
+		try {
+			$messageObj = new Message( $message['page'], $message['wiki'], $message['batchId'], $message['author'] );
+			$messageObj->setId( $message['_id'] );
+
+			return $messageObj;
+		} catch ( Exception $e ) {
+			return [];
+		}
+	}
 }

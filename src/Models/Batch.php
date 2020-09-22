@@ -11,6 +11,7 @@ class Batch {
 	public $wikicode;
 	public $subject;
 	public $body;
+	public $author;
 
 	/**
 	 * Default constructor
@@ -19,13 +20,15 @@ class Batch {
 	 * @param string $wikicode
 	 * @param string $subject
 	 * @param string $body
+	 * @param string $author
 	 * @return void
 	 */
-	public function __construct( $title, $wikicode, $subject, $body ) {
+	public function __construct( $title, $wikicode, $subject, $body, $author ) {
 		$this->title  = $title;
 		$this->wikicode = $wikicode;
 		$this->subject = $subject;
 		$this->body = $body;
+		$this->author = $author;
 	}
 
 	/**
