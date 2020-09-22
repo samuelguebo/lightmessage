@@ -3,6 +3,25 @@ body {
 	height: 100%;
 }
 
+pre {
+	overflow-x: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+a {
+	color: #28a745;
+}
+
+a:hover {
+	color: #ffc107
+}
+
 .boxed {
 	max-width: 700px;
 	min-height: 85%;
@@ -90,6 +109,7 @@ p.tou-description {
 	font-size: 1em;
 	color: #444;
 	margin-top: 24px;
+	opacity: .8;
 }
 
 /* Sortable tables */
@@ -135,6 +155,10 @@ table.sortable tbody tr::before {
 	border-top: none;
 }
 
+.table .delivered {
+	color: #cecece;
+}
+
 .messages {
 	margin-top: 10px;
 }
@@ -142,7 +166,7 @@ table.sortable tbody tr::before {
 /**
  * Sending messages
  */
-.sendButton {
+#sendButton {
 	position: fixed;
 	bottom: 30%;
 	right: 100px;
@@ -153,7 +177,50 @@ table.sortable tbody tr::before {
 	color: #FFF;
 }
 
-.sendButton:hover {
+#sendButton:hover {
 	cursor: pointer;
 	background: #ffc107;
+}
+
+/**
+ * UI transitions and animations
+ */
+
+tr.sending .indicator {
+	width: 20px;
+	height: 20px;
+	position: relative;
+}
+
+tr.sending .indicator::after {
+	font-family: 'Fontawesome';
+	content: "\f021";
+	animation: animateRotate 1s linear infinite;
+	display: inline-block;
+	position: absolute;
+	margin-left: 20px;
+	color: #28a745;
+}
+
+@keyframes animateRotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.notice {
+	position: absolute;
+	padding: 15px 20px;
+	background: gray;
+	color: #FFF;
+	border-radius: 10px;
+	font-size: .9em;
+	transition: opacity 1s ease-in-out;
+	opacity: 0;
+	bottom: 10%;
+	right: 10%;
 }

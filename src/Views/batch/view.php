@@ -5,48 +5,60 @@
 require_once ROOT . '/src/Views/header.php';?>
  
  <section class="batch">
-	<h3><?php echo $batch['title'];?> <a href="/batch/update/<?php echo $batch['_id']?>" class="btn btn-warning btn-sm btn-update"><i class="fa fa-edit"></i> Edit</a></h3>
+	<h3><?php echo $batch['title'];?> 
+	<a href="/batch/update/<?php echo $batch['_id']?>" class="btn btn-warning btn-sm btn-update"><i class="fa fa-edit"></i> Edit</a>
+	<a href="/batch/delete/<?php echo $batch['_id']?>" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i> Delete</a>
+	</h3>
 	<div class="card">
 		<div class="card-body">
 		<span class="badge badge-success">content</span>
-		<h4><strong><?php echo $batch['subject'];?></strong> </h4>
-		<?php echo $batch['body'];?>
+		<h4><strong><?php echo $batch['subject'];?></strong></h4>
+		<pre><?php echo $batch['body'];?></pre>
 		</div>
 	</div>
 </section>
 <section class="messages">
 	<?php if ( !empty( $messages ) ) {?>
-		<table id="messagees-table" class="table table-striped sortable">
-		<thead>
-			<tr>
-				<!-- <th>#</th> -->
-				<th class="sorttable_nosort"></th>
-				<th>Page</th>
-				<th>Wiki</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach ( $messages as $message ) {?>
-				<tr id="message-<?php echo $message['_id'];?>>">
-					<td><input type="checkbox" name="<?php echo $message['_id'];?>"></td>
-					<td><?php echo $message['page']?></td>
-					<td><?php echo $message['wiki']?></td>
-					<td><?php echo $message['status'] === true ? "delivered" : "pending"; ?></td>
+		<table id="messages-table" class="table table-striped sortable">
+			<thead>
+				<tr>
+					<!-- <th>#</th> -->
+					<th class="sorttable_nosort"></th>
+					<th>Page</th>
+					<th>Wiki</th>
+					<th>Status</th>
 				</tr>
-			<?php }  ?>
+			</thead>
+			<tbody>
+				<?php foreach ( $messages as $message ) {?>
+					<?php if ( $message['status'] === true ) {?>
+					<tr id="message-<?php echo $message['_id'];?>" class="delivered">
+						<td></td>
+						<td><?php echo $message['page']?></td>
+						<td><?php echo $message['wiki']?></td>
+						<td><?php echo "delivered"; ?> <span class="indicator"></span></td>
+					</tr>
+					<?php } else {?>
+					<tr id="message-<?php echo $message['_id'];?>" batchid="<?php echo $batch['_id']?>">
+						<td><input type="checkbox" name="<?php echo $message['_id'];?>"></td>
+						<td><?php echo $message['page']?></td>
+						<td><?php echo $message['wiki']?></td>
+						<td><?php echo "pending"; ?> <span class="indicator"></span></td>
+					</tr>
+					<?php } ?>
+				<?php } ?>
 			</tbody>
 		</table>
 	
 	<?php } else { ?>
-		<div class="alert alert-warning" role="alert">
-			There seems to be no messages yet.
-		</div>
+	<div class="alert alert-warning" role="alert">
+		There seems to be no messages yet.
+	</div>
 	<?php } ?>
 </section>
 
 <!-- floating button -->
-<div class="sendButton"><i class="fa fa-paper-plane"></i></div>
+<div id="sendButton"><i class="fa fa-paper-plane"></i></div>
 
  <?php
 require_once ROOT . '/src/Views/footer.php';

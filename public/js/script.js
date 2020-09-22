@@ -10,3 +10,119 @@
  * Created at     : 2020-09-21 01:01:56 
  * Last modified  : 2020-09-21 01:02:39
  */
+
+/**
+ * Global variables
+ */
+let messagesTable = document.getElementById('messages-table')
+let sendButton = document.getElementById('sendButton')
+
+/**
+ * Interact with API to post message
+ * and return response
+ * @param {Message} message 
+ */
+const sendMessage = (message) => {}
+
+/**
+ * Collecting data from all the table rows
+ * that were checked
+ */
+const getSelectedMessages = () => {
+    let selectedMessages = []
+    let rows = Object.values(messagesTable.rows)
+    if (rows.length > 1) {
+        rows = rows.slice(1)
+
+        // Extract and convert to object
+        for (let row of rows) {
+
+            // Check whether message was already delivered
+            if (Array.from(row.classList).indexOf('delivered') < 0) {
+
+                let id = row.id.replace('message-', '')
+                let page = row.cells[1].innerText
+                let wiki = row.cells[2].innerText
+                let status = row.cells[3].innerText
+                let checked = row.cells[0].querySelector('input[type=checkbox]').checked
+                let batchId = row.getAttribute('batchid')
+
+                if (isset(page) && isset(wiki) && isset(batchId) && isset(status) && (checked)) {
+                    selectedMessages.push(new Message(id, page, wiki, batchId, status))
+                }
+            }
+
+        }
+    }
+
+    return selectedMessages
+}
+
+/**
+ * Constructor for Message objects
+ * that emulate PHP model
+ * 
+ * @param {*} id 
+ * @param {*} page 
+ * @param {*} wiki 
+ * @param {*} batchId 
+ * @param {*} status 
+ */
+const Message = function (id, page, wiki, batchId, status) {
+    this.id = id;
+    this.page = page;
+    this.wiki = wiki;
+    this.batchId = batchId;
+    this.status = status;
+}
+
+/**
+ * Helper function, emulating isset() 
+ * @param {*} object 
+ */
+const isset = (object) => {
+    return (typeof object !== 'undefined' && object !== null);
+}
+
+const setSendButtonListener = () => {
+    if (isset(sendButton)) {
+        sendButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            let messages = getSelectedMessages();
+            console.log(messages)
+        })
+    }
+}
+
+/**
+ * Display a notice that fades away
+ * after a certain time
+ * 
+ * @param {*} message 
+ * @param {*} duration 
+ */
+const showNotice = (message, duration = 2000) => {
+    let notice = document.createElement('div');
+    notice.className = 'notice';
+    notice.innerText = message;
+    if (Array.from(document.querySelector('body').childNodes).indexOf(notice) > -1) {
+        document.querySelector('body').removeChild(notice);
+    }
+    document.querySelector('body').appendChild(notice);
+    notice.style.opacity = 1;
+    setTimeout(() => {
+        notice.style.opacity = 0;
+
+    }, duration);
+};
+
+
+/**
+ * Entry point of the UI interactions
+ */
+const init = () => {
+    setSendButtonListener();
+}
+
+// Run the show
+init();
