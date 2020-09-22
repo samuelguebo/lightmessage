@@ -1,15 +1,10 @@
 <?php namespace Lightmessage\Utils;
 
-use CURLFile;
 use Exception;
-use Lightmessage\Config\Settings;
 use MediaWiki\OAuthClient\Token;
 
 /**
- * Oauth mechanism largely inspired by Brad Jorsch's approach
- * See <https://tools.wmflabs.org/oauth-hello-world/>
- * TODO: Refactor and reduce code duplication
- * consider https://bitbucket.org/magnusmanske/magnustools/src/master/classes/OAuth.php
+ * Oauth mechanism
  */
 
 class MediaWiki {
@@ -20,12 +15,13 @@ class MediaWiki {
 	/**
 	 * Edit a sandbox on Wikimedia Commons
 	 *
+	 * @param mixed $wiki wiki url (without protocol)
 	 * @param mixed $page Name space
 	 * @param mixed $subject Section title
 	 * @param mixed $body text in special markup (wikicode)
 	 * @return string / error
 	 */
-	public function addMessage( $page, $subject, $body ) {
+	public function addMessage( $wiki, $page, $subject, $body ) {
 		try {
 			$client = ( new OAuth() )->getClient();
 			$accessToken = new Token(
@@ -36,7 +32,7 @@ class MediaWiki {
 			// Get edit token
 			$token = json_decode( $client->makeOAuthCall(
 				$accessToken,
-				Settings::$OAUTH_MWURI . "/w/api.php" . '?action=query&meta=tokens&format=json'
+				'https://' . $wiki . "/w/api.php" . '?action=query&meta=tokens&format=json'
 			) )->query->tokens->csrftoken;
 
 			// Perform the edit
@@ -55,7 +51,7 @@ class MediaWiki {
 			// Get response
 			$res = json_decode( $client->makeOAuthCall(
 				$accessToken,
-				Settings::$OAUTH_MWURI . "/w/api.php",
+				'https://' . $wiki . "/w/api.php",
 				true,
 				$params
 			) );
@@ -67,67 +63,15 @@ class MediaWiki {
 	}
 
 	/**
-	 * Push icon file to Wikimedia Commons
-	 * while avoiding duplicates
-	 * @param mixed $icon
-	 * @return string / error
-	 */
-	public function uploadFile( $icon ) {
-		$client = ( new OAuth() )->getClient();
-		$accessToken = new Token(
-			Router::getCookie( 'accessToken' ),
-			Router::getCookie( 'accessSecret' )
-		);
-
-		// Get CSRF token
-		$token = json_decode( $client->makeOAuthCall(
-			$accessToken,
-			Settings::$OAUTH_MWURI . "/w/api.php" . '?action=query&meta=tokens&format=json'
-		) )->query->tokens->csrftoken;
-
-		// Prepare to send file
-		$file = new CURLFile( realpath( $icon->path ), 'image/svg+xml', $icon->title );
-
-		// Set up parameters, stripping off "File:"
-		$params = [
-		'format' => 'json',
-		'action' => 'upload',
-		'filename' => $icon->title,
-		'text' => $icon->wikicode,
-		'file' => $file,
-		'token' => $token,
-		"ignorewarnings" => 1
-		];
-
-		// Perform the upload
-		$res = json_decode( $client->makeOAuthCall(
-			$accessToken,
-			Settings::$OAUTH_MWURI . "/w/api.php",
-			true,
-			$params
-		) );
-
-		if ( isset( $res->error ) ) {
-			// throw new Exception('An error occured while uploading');
-			throw new Exception( json_encode( $res->error->info ) );
-		}
-
-		// Updating icon path
-		$icon->path  = "https://commons.wikimedia.org/wiki/";
-		$icon->path .= str_replace( ' ', '_', $icon->title );
-
-		return $icon;
-	}
-
-	/**
-	 * isFileExistent
+	 * isPageExistent
 	 *
-	 * @param mixed $file
+	 * @param mixed $wiki
+	 * @param mixed $page
 	 * @return void
 	 */
-	public function isFileExistent( $file ) {
+	public function isPageExistent( $wiki, $page ) {
 		try {
-			$response = file_get_contents( Settings::$OAUTH_MWURI . "/w/api.php" . "?action=query&prop=revisions&titles=" . urlencode( $file->title ) . "&rvslots=*&rvprop=content&format=json" );
+			$response = file_get_contents( 'https://' . $wiki . "/w/api.php" . "?action=query&prop=revisions&titles=" . urlencode( $page ) . "&rvslots=*&rvprop=content&format=json" );
 			return !array_key_exists( "-1", json_decode( $response, true )['query']['pages'] );
 
 		} catch ( Exception $e ) {
