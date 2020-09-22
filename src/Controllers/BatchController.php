@@ -3,6 +3,7 @@
 use Exception;
 use Lightmessage\Models\Batch;
 use Lightmessage\Utils\BatchRepository;
+use Lightmessage\Utils\OAuth;
 use Lightmessage\Utils\Router;
 
 /**
@@ -27,16 +28,20 @@ class BatchController extends AbstractController {
 	 */
 	public function save( $request = null ) {
 		try {
+			$oauth = new OAuth();
+			$author = $oauth->getProfile();
 			$data = filter_input_array( INPUT_POST );
 			if ( !empty( $data['title'] ) &&
 			!empty( $data['wikicode'] ) &&
 			!empty( $data['subject'] ) &&
+			!empty( $author ) &&
 			!empty( $data['body'] ) ) {
 				$batch = new Batch(
 					$data['title'],
 					$data['wikicode'],
 					$data['subject'],
-					$data['body']
+					$data['body'],
+					$author
 				);
 
 				// Set $id if in the middle of update

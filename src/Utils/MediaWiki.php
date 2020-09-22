@@ -23,6 +23,12 @@ class MediaWiki {
 	 */
 	public function addMessage( $wiki, $page, $subject, $body ) {
 		try {
+			// Trimming
+
+			$wiki = trim( $wiki );
+			$page = trim( $page );
+			$subject = trim( $subject );
+
 			$client = ( new OAuth() )->getClient();
 			$accessToken = new Token(
 				Router::getCookie( 'accessToken' ),
@@ -71,11 +77,46 @@ class MediaWiki {
 	 */
 	public function isPageExistent( $wiki, $page ) {
 		try {
+			// Trimming
+			$wiki = trim( $wiki );
+			$page = trim( $page );
+
 			$response = file_get_contents( 'https://' . $wiki . "/w/api.php" . "?action=query&prop=revisions&titles=" . urlencode( $page ) . "&rvslots=*&rvprop=content&format=json" );
 			return !array_key_exists( "-1", json_decode( $response, true )['query']['pages'] );
 
 		} catch ( Exception $e ) {
 			return true;
+		}
+	}
+
+	/**
+	 * getPageEdits
+	 *
+	 * @param mixed $wiki
+	 * @param mixed $page
+	 * @param mixed $author
+	 * @param mixed $limit
+	 * @return array
+	 */
+	public function getPageEdits( $wiki, $page, $author = null, $limit = 100 ) {
+		try{
+			// Trimming
+			$wiki = trim( $wiki );
+			$page = trim( $page );
+
+			// Make sure page exists
+			if ( !$this->isPageExistent( $wiki, $page ) ) {
+				throw new Exception();
+			}
+
+			$query_url = "https://" . $wiki . "/w/api.php" . "?action=query&prop=revisions";
+			$query_url .= "&rvprop=user|timestamp|comment|ids";
+			$query_url .= "&titles=" . urlencode( $page ) . "&rvlimit=$limit&format=json&origin=*";
+
+			$response = file_get_contents( $query_url );
+			return array_values( json_decode( $response, true )['query']['pages'] )['0']['revisions'];
+		} catch ( Exception $e ) {
+			return [];
 		}
 	}
 }
