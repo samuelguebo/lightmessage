@@ -245,7 +245,7 @@ class BatchRepository {
 		$messages = [];
 		$lines = explode( "\n", $wikicode );
 		foreach ( $lines as $line ) {
-		   preg_match( '/page.(.*).*\|site.(.*).*}}/', $line, $matches );
+		   preg_match( '/=(.*).*\|.*=(.*).*}}/', $line, $matches );
 		   if ( count( $matches ) > 1 ) {
 			   $page = $matches[1];
 			   $wiki = $matches[2];
