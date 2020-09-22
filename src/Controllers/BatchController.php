@@ -72,7 +72,7 @@ class BatchController extends AbstractController {
 				require VIEW_DIR . "/batch/view.php";
 			} else {
 
-			require VIEW_DIR . "/404.php";
+				require VIEW_DIR . "/404.php";
 
 			}
 	}
@@ -89,5 +89,24 @@ class BatchController extends AbstractController {
 		$batch = $repository->getBatchById( $batchId );
 		$messages = $repository->getBatchMessages( $batchId );
 		require VIEW_DIR . "/batch/update.php";
+	}
+
+	/**
+	 * Rest endpoint for route `/batch/delete`
+	 * it matches GET requests
+	 * @param mixed $request
+	 * @return void
+	 */
+	public function delete( $request = null ) {
+		$batchId = Router::getParam( $request );
+		$repository = new BatchRepository;
+		$batch = $repository->getBatchById( $batchId );
+		if ( !empty( $batch ) ) {
+			$messages = $repository->deleteBatchById( $batchId );
+			// Redirect to home if there are no errors
+			header( "Location: /" );
+		} else {
+			require VIEW_DIR . "/404.php";
+		}
 	}
 }

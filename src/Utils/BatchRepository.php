@@ -153,6 +153,24 @@ class BatchRepository {
 	}
 
 	/**
+	 * Save batch
+	 * @param int $batchId
+	 * @return void
+	 */
+	public function deleteBatchById( $batchId ) {
+		$error = false;
+		try {
+			$batchDb = $this->getTableData( 'batch' );
+			$batchDb->where( '_id', '=', $batchId )->delete();
+			$messageDb = $this->getTableData( 'message' );
+
+			// Delete all child messages
+			$messageDb->where( 'batchId', '=', $batchId )->delete();
+		} catch ( Exception $e ) {
+		}
+	}
+
+	/**
 	 * Switch between create or update operations
 	 * @param Batch $batch
 	 * @return mixed
@@ -186,7 +204,8 @@ class BatchRepository {
 				if ( !$this->messageExists( $message ) ) {
 					$this->createMessage( $message );
 				} else {
-					$this->updateMessage( $message );
+					// Discard update, on purpose
+					// $this->updateMessage( $message );
 				}
 			}
 		} catch ( Exception $e ) {
@@ -226,7 +245,7 @@ class BatchRepository {
 		$messages = [];
 		$lines = explode( "\n", $wikicode );
 		foreach ( $lines as $line ) {
-		   preg_match( '/page =*(.*).\| site =*(.*).}}/', $line, $matches );
+		   preg_match( '/page.(.*).*\|site.(.*).*}}/', $line, $matches );
 		   if ( count( $matches ) > 1 ) {
 			   $page = $matches[1];
 			   $wiki = $matches[2];
