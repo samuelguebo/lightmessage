@@ -18,11 +18,10 @@ class TestController extends AbstractController {
 	public function test( $request ) {
 		try {
 			// TODO: Implement as needed
-			$repository = new BatchRepository;
-			$message = $repository->fetch( 'message', 3 )[2];
-			$messenger = new MessageService( Message::fromArray( $message ) );
-			// print_r( $message );
-			// $messenger->send();
+			$message = ( new BatchRepository )->getMessageById( 107 );
+			$service = new MessageService( Message::fromArray( $message ) );
+			// print_r( Message::fromArray( $message ) );
+			// print_r( $service->send() );
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}

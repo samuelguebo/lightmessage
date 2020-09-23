@@ -24,7 +24,6 @@ class MediaWiki {
 	public function addMessage( $wiki, $page, $subject, $body ) {
 		try {
 			// Trimming
-
 			$wiki = trim( $wiki );
 			$page = trim( $page );
 			$subject = trim( $subject );
@@ -46,7 +45,7 @@ class MediaWiki {
 				'format' => 'json',
 				'action' => 'edit',
 				'title' => $page,
-				'sectiontitle' => 'new',
+				'section' => 'new',
 				'sectiontitle' => $subject,
 				'text' => $body,
 				'summary' => "/* $subject */",

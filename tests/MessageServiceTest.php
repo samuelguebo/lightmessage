@@ -13,9 +13,9 @@ class MessageServiceTest extends TestCase {
 	 */
 	public function testIsDuplicate() {
 		$message = new Message(
-			'User talk:Samuel (WMF)',
+			'User talk:African Hope',
 			'fr.wikipedia.org', 9,
-			'MediaWiki message delivery'
+			'Samuel (WMF)'
 		);
 
 		$service = new MessageService( $message );

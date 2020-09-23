@@ -34,14 +34,14 @@ require_once ROOT . '/src/Views/header.php';?>
 					<?php if ( $message['status'] === true ) {?>
 					<tr id="message-<?php echo $message['_id'];?>" class="delivered">
 						<td></td>
-						<td><?php echo $message['page']?></td>
+						<td><a href="https://<?php echo $message['wiki']?>/wiki/<?php echo trim( $message['page'] )?>"><?php echo $message['page']?></a></td>
 						<td><?php echo $message['wiki']?></td>
 						<td><?php echo "delivered"; ?> <span class="indicator"></span></td>
 					</tr>
 					<?php } else {?>
 					<tr id="message-<?php echo $message['_id'];?>" batchid="<?php echo $batch['_id']?>">
 						<td><input type="checkbox" name="<?php echo $message['_id'];?>"></td>
-						<td><?php echo $message['page']?></td>
+						<td><a href="https://<?php echo trim( $message['wiki'] )?>/wiki/<?php echo $message['page']?>"><?php echo $message['page']?></a></td>
 						<td><?php echo $message['wiki']?></td>
 						<td><?php echo "pending"; ?> <span class="indicator"></span></td>
 					</tr>

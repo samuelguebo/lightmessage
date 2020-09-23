@@ -26,14 +26,18 @@ class MessageController extends AbstractController {
 				$data = json_decode( $data['data'], true );
 				$message = ( new BatchRepository )->getMessageById( $data['id'] );
 				$response = ( new MessageService( Message::fromArray( $message ) ) )->send();
-				$message['response'] = $response;
-				$message['status'] = 200;
+				if ( !$response ) {
+					throw new Exception();
+				}
+
+				$message['data'] = $data;
+				$message['response'] = true;
 			} else {
 				throw new Exception();
 			}
 
 		} catch ( Exception $e ) {
-			$message['status'] = 400;
+			$message['response'] = false;
 		} finally {
 			echo json_encode( $message );
 			// echo json_encode( $message );

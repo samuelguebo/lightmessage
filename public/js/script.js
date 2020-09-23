@@ -39,7 +39,12 @@ const sendMessage = (message) => {
             if (data.response === false) {
                 messageIndicator.classList.add('failed')
                 messageIndicator.querySelector('td:last-child').innerText = 'failed'
+            } else {
+                messageIndicator.className = "delivered"
+                messageIndicator.querySelector('td:last-child').innerText = 'delivered'
             }
+
+            console.log(data)
         })
         .catch(e => console.log(e))
 }

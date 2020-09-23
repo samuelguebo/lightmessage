@@ -34,18 +34,25 @@ class MessageService {
 			}
 
 			// Post message to wiki
-			/*
-			return ( new MediaWiki )
-				->addMessage(
-					$message->wiki,
-					$message->page,
-					$message->subject,
-					$message->body
-				);
-			*/
+			$batch = ( new BatchRepository )->getBatchById( $this->message->batchId );
 
-			// TODO: post message, if there are no errors, update $message in DB
-			return [];
+			$res = ( new MediaWiki )
+				->addMessage(
+					$this->message->wiki,
+					$this->message->page,
+					$batch['subject'],
+					$batch['body']
+				);
+
+			if ( !isset( $res->edit ) ) {
+				throw new Exception();
+			}
+
+			// If there are no errors, update $message in DB
+			$this->message->setStatus( true );
+			( new BatchRepository )->updateMessage( $this->message );
+
+			return true;
 		} catch ( Exception $e ) {
 			return false;
 		}
