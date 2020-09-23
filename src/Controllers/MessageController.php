@@ -3,7 +3,7 @@
 use Exception;
 use Lightmessage\Models\Message;
 use Lightmessage\Utils\BatchRepository;
-use Lightmessage\Utils\Messenger;
+use Lightmessage\Utils\MessageService;
 
 /**
  * Controller handling Message delivery
@@ -21,24 +21,22 @@ class MessageController extends AbstractController {
 		$error_not_found = "Invalid request";
 		try {
 			$data = filter_input_array( INPUT_POST );
-			$message['status'] = 200;
 
 			if ( isset( $data['data'] ) ) {
 				$data = json_decode( $data['data'], true );
-				$repository = new BatchRepository;
-				$message = $repository->getMessageById( $data['id'] );
-				$messenger = new Messenger( Message::fromArray( $message ) );
-				$response = $messenger->send();
+				$message = ( new BatchRepository )->getMessageById( $data['id'] );
+				$response = ( new MessageService( Message::fromArray( $message ) ) )->send();
 				$message['response'] = $response;
+				$message['status'] = 200;
 			} else {
 				throw new Exception();
 			}
 
 		} catch ( Exception $e ) {
 			$message['status'] = 400;
-			$message['message'] = $error_not_found;
 		} finally {
 			echo json_encode( $message );
+			// echo json_encode( $message );
 		}
 	}
 }

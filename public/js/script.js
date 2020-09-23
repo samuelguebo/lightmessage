@@ -36,7 +36,10 @@ const sendMessage = (message) => {
         .then(res => res.json())
         .then(data => {
             messageIndicator.classList.remove('sending')
-            console.log(data)
+            if (data.response === false) {
+                messageIndicator.classList.add('failed')
+                messageIndicator.querySelector('td:last-child').innerText = 'failed'
+            }
         })
         .catch(e => console.log(e))
 }

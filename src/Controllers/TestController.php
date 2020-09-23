@@ -1,8 +1,9 @@
 <?php namespace Lightmessage\Controllers;
 
 use Exception;
+use Lightmessage\Models\Message;
 use Lightmessage\Utils\BatchRepository;
-use Lightmessage\Utils\Messenger;
+use Lightmessage\Utils\MessageService;
 
 /**
  * Controller handling homepage
@@ -16,12 +17,12 @@ class TestController extends AbstractController {
 	 */
 	public function test( $request ) {
 		try {
+			// TODO: Implement as needed
 			$repository = new BatchRepository;
 			$message = $repository->fetch( 'message', 3 )[2];
-			$messenger = new Messenger;
+			$messenger = new MessageService( Message::fromArray( $message ) );
 			// print_r( $message );
-			// print_r( $messenger->getPostedMessage( Message::fromArray( $message ) ) );
-
+			// $messenger->send();
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}

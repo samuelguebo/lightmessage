@@ -169,7 +169,7 @@ table.sortable tbody tr::before {
 #sendButton {
 	position: fixed;
 	bottom: 30%;
-	right: 100px;
+	left: 100px;
 	padding: 10px 14px;
 	background: #28a745;
 	border-radius: 40px;
@@ -223,4 +223,8 @@ tr.sending .indicator::after {
 	opacity: 0;
 	bottom: 10%;
 	right: 10%;
+}
+
+.failed td:last-child {
+	color: crimson;
 }
