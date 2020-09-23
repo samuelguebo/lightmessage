@@ -155,7 +155,8 @@ table.sortable tbody tr::before {
 	border-top: none;
 }
 
-.table .delivered {
+.table .delivered,
+.delivered a {
 	color: #cecece;
 }
 
@@ -171,7 +172,7 @@ table.sortable tbody tr::before {
 	bottom: 30%;
 	left: 100px;
 	padding: 10px 14px;
-	background: #28a745;
+	background: #ffc107;
 	border-radius: 40px;
 	display: block;
 	color: #FFF;
@@ -179,7 +180,7 @@ table.sortable tbody tr::before {
 
 #sendButton:hover {
 	cursor: pointer;
-	background: #ffc107;
+	background: #28a745;
 }
 
 /**
