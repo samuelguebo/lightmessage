@@ -10,21 +10,23 @@ use Lightmessage\Models\Message;
  */
 class MessageService {
 	private $message;
+	private $unsafe_interval;
 
 	/**
 	 * Constructor
 	 *
 	 * @param mixed $message
+	 * @param int $unsafe_interval interval during which not new message should be posted
 	 * @return void
 	 */
-	public function __construct( Message $message ) {
+	public function __construct( Message $message, $unsafe_interval ) {
 		$this->message = $message;
+		$this->unsafe_interval = $unsafe_interval;
 	}
 
 	/**
 	 * Post messages only if certain conditions are met.
 	 * Avoid duplication or posting to non-existent page
-	 *
 	 * @return mixed
 	 */
 	public function send() {
@@ -61,28 +63,34 @@ class MessageService {
 	/**
 	 * Check for duplication by verifying
 	 * whether a message was already posted within the last 72 hours
-	 *
 	 * @return bool
 	 */
 	public function isDuplicate() {
 		$messages = $this->getPostedMessages();
-		foreach ( $messages as $message ) {
-			// Get timestamp of three days ago
-			$three_days_ago = strtotime( date( "F j, Y", time() - 60 * 60 * 72 ) );
-			// Logger::log( $message );
-			$edit_timestamp = strtotime( $message['timestamp'] );
+		try {
 
-			// continue if edit was made within the last three days
-			if ( !( $edit_timestamp > $three_days_ago ) ) {
+			foreach ( $messages as $message ) {
+				// Logger::log( $message );
+				$edit_timestamp = strtotime( $message['timestamp'] );
 
-				// Check whether author posted less than 72 hours
-				$interval = ( $three_days_ago - $edit_timestamp ) / 3600;
-				if ( $interval < 72 && ( $message['user'] === $this->message->author ) ) {
-					return true;
+				// Get timestamp of safe interval
+				$since = strtotime( "-" . $this->unsafe_interval . " hour" );
+
+				// continue verification if edit was made within safe interval
+				if ( ( $since < $edit_timestamp ) ) {
+
+					// Check whether author during the unsafe interval
+					$interval = ( $since - $edit_timestamp ) / 3600;
+					if ( $interval < $this->unsafe_interval && ( $message['user'] === $this->message->author ) ) {
+						return true;
+					}
+
 				}
 
 			}
+		} catch ( Exception $e ) {
 
+			return false;
 		}
 
 		return false;

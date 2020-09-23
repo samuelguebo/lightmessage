@@ -97,7 +97,7 @@ class MediaWiki {
 	 * @param mixed $limit
 	 * @return array
 	 */
-	public function getPageEdits( $wiki, $page, $author = null, $limit = 100 ) {
+	public function getPageEdits( $wiki, $page, $author = null, $limit = 50 ) {
 		try{
 			// Trimming
 			$wiki = trim( $wiki );

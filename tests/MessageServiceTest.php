@@ -18,7 +18,8 @@ class MessageServiceTest extends TestCase {
 			'Samuel (WMF)'
 		);
 
-		$service = new MessageService( $message );
+		$unsafe_interval = 3 * 24;
+		$service = new MessageService( $message, $unsafe_interval );
 		$this->assertTrue( $service->isDuplicate() );
 	}
 
