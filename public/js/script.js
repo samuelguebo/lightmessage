@@ -89,6 +89,38 @@ const getSelectedMessages = () => {
 }
 
 /**
+ * Collect all failed messages
+ */
+const getFailedMessages = () => {
+    let failedMessages = []
+    let rows = Object.values(document.getElementById('messages-table').rows)
+    if (rows.length > 1) {
+        rows = rows.slice(1)
+
+        // Extract and convert to object
+        for (let row of rows) {
+
+            // Check whether message was already delivered
+            if (Array.from(row.classList).indexOf('failed') < 0) {
+
+                let id = row.id.replace('message-', '')
+                let page = row.cells[1].innerText
+                let wiki = row.cells[2].innerText
+                let status = row.cells[3].innerText
+                let batchId = row.getAttribute('batchid')
+
+                if (isset(page) && isset(wiki) && isset(batchId) && isset(status)) {
+                    failedMessages.push(new Message(id, page, wiki, batchId, status))
+                }
+            }
+
+        }
+    }
+
+    return failedMessages
+}
+
+/**
  * Constructor for Message objects
  * that emulate PHP model
  * 
@@ -119,7 +151,13 @@ const setSendButtonListener = () => {
         sendButton.addEventListener('click', async (e) => {
             e.preventDefault();
             let messages = getSelectedMessages();
-            for (message of messages) {
+            for (let message of messages) {
+                await sendMessage(message)
+            }
+
+            // Try re-sending failed messages once
+            let failedMessages = getFailedMessages();
+            for (let message of failedMessages) {
                 await sendMessage(message)
             }
         })
@@ -129,9 +167,8 @@ const setSendButtonListener = () => {
 const setCheckAllListener = () => {
     if (isset(checkAllListener)) {
         checkAllListener.addEventListener('click', (e) => {
-            let checked = this.checked
             for (checkbox of document.querySelectorAll('input[type=checkbox]')) {
-                if (checked) {
+                if (this.checked) {
                     checkbox.checked = false
                 } else {
                     checkbox.checked = true

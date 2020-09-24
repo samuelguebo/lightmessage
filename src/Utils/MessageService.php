@@ -44,7 +44,7 @@ class MessageService {
 					$this->message->page,
 					$batch['subject'],
 					$batch['body'],
-					"/* $subject - " . $batch['title'] . " */"
+					"/* " . $batch['subject'] . " - " . $batch['title'] . " */"
 				);
 
 			if ( !isset( $res->edit ) ) {

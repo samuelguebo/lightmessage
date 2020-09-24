@@ -1,8 +1,6 @@
 <?php namespace Lightmessage\Controllers;
 
 use Exception;
-use Lightmessage\Models\Message;
-use Lightmessage\Utils\MessageService;
 
 /**
  * Controller handling homepage
