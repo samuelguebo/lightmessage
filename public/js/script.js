@@ -16,6 +16,7 @@
  */
 let messagesTable = document.getElementById('messages-table')
 let sendButton = document.getElementById('sendButton')
+let checkAllListener = document.getElementById('check-all')
 
 /**
  * Interact with API to post message
@@ -38,15 +39,19 @@ const sendMessage = (message) => {
             messageIndicator.classList.remove('sending')
             if (data.response === false) {
                 messageIndicator.classList.add('failed')
-                messageIndicator.querySelector('td:last-child').innerText = 'failed'
+                messageIndicator.querySelector('td:last-child').innerHtml = 'failed <span class="indicator"></span>'
             } else {
-                messageIndicator.className = "delivered"
-                messageIndicator.querySelector('td:last-child').innerText = 'delivered'
+                messageIndicator.className = 'delivered'
+                messageIndicator.querySelector('td:last-child').innerHtml = 'delivered <span class="indicator"></span>'
             }
 
-            console.log(data)
         })
-        .catch(e => console.log(e))
+        .catch(e => {
+            console.log(e)
+            messageIndicator.classList.add('failed')
+            messageIndicator.querySelector('td:last-child').innerText = 'failed'
+
+        })
 }
 
 /**
@@ -121,6 +126,21 @@ const setSendButtonListener = () => {
     }
 }
 
+const setCheckAllListener = () => {
+    if (isset(checkAllListener)) {
+        checkAllListener.addEventListener('click', (e) => {
+            let checked = this.checked
+            for (checkbox of document.querySelectorAll('input[type=checkbox]')) {
+                if (checked) {
+                    checkbox.checked = false
+                } else {
+                    checkbox.checked = true
+                }
+            }
+        })
+    }
+}
+
 /**
  * Display a notice that fades away
  * after a certain time
@@ -149,6 +169,7 @@ const showNotice = (message, duration = 2000) => {
  */
 const init = () => {
     setSendButtonListener();
+    setCheckAllListener();
 }
 
 // Run the show
