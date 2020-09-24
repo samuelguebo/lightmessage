@@ -19,9 +19,10 @@ class MediaWiki {
 	 * @param mixed $page Name space
 	 * @param mixed $subject Section title
 	 * @param mixed $body text in special markup (wikicode)
+	 * @param mixed $summary
 	 * @return string / error
 	 */
-	public function addMessage( $wiki, $page, $subject, $body ) {
+	public function addMessage( $wiki, $page, $subject, $body, $summary ) {
 		try {
 			// Trimming
 			$wiki = trim( $wiki );
@@ -48,7 +49,7 @@ class MediaWiki {
 				'section' => 'new',
 				'sectiontitle' => $subject,
 				'text' => $body,
-				'summary' => "/* $subject */",
+				'summary' => $summary,
 				'watchlist' => 'nochange',
 				'token' => $token,
 			];

@@ -16,7 +16,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="/public/js/script.js"></script>
+	<script src="/public/js/jquery-3.5.1.min.js"></script>
 	<script src="/public/js/sortable.js"></script>
+	<script src="/public/js/script.js"></script>
 </body>
 </html>

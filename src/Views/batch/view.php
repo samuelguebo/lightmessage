@@ -23,7 +23,7 @@ require_once ROOT . '/src/Views/header.php';?>
 			<thead>
 				<tr>
 					<!-- <th>#</th> -->
-					<th class="sorttable_nosort"></th>
+					<th class="sorttable_nosort"><input type="checkbox" id="check-all"></th>
 					<th>Page</th>
 					<th>Wiki</th>
 					<th>Status</th>

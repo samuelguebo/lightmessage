@@ -229,3 +229,28 @@ tr.sending .indicator::after {
 .failed td:last-child {
 	color: crimson;
 }
+
+/**
+ * Paging
+ */
+.paging-wrapper a.active {
+	color: #28a745;
+}
+
+.paging-wrapper a {
+	color: #cecece;
+	display: inline-block;
+	margin-right: 5px;
+	border: solid 1px;
+	padding: 6px 11px;
+	font-size: .7em;
+	border-radius: 30px;
+	width: 30px;
+	height: 30px;
+	text-decoration: none;
+}
+
+.paging-wrapper a:hover {
+	background: #28a745;
+	color: #fff;
+}

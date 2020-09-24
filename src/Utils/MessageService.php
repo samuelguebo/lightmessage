@@ -43,7 +43,8 @@ class MessageService {
 					$this->message->wiki,
 					$this->message->page,
 					$batch['subject'],
-					$batch['body']
+					$batch['body'],
+					"/* $subject - " . $batch['title'] . " */"
 				);
 
 			if ( !isset( $res->edit ) ) {
@@ -82,6 +83,9 @@ class MessageService {
 					// Check whether author during the unsafe interval
 					$interval = ( $since - $edit_timestamp ) / 3600;
 					if ( $interval < $this->unsafe_interval && ( $message['user'] === $this->message->author ) ) {
+						// update $message in DB
+						$this->message->setStatus( true );
+						( new BatchRepository )->updateMessage( $this->message );
 						return true;
 					}
 

@@ -17,7 +17,7 @@ class MessageController extends AbstractController {
 	 */
 	public function send( $request = null ) {
 		header( "Content-type: application/json" );
-		$message = [];
+		$output = [];
 		$error_not_found = "Invalid request";
 		try {
 			$data = filter_input_array( INPUT_POST );
@@ -35,16 +35,16 @@ class MessageController extends AbstractController {
 					throw new Exception();
 				}
 
-				$message['data'] = $data;
-				$message['response'] = true;
+				$output['data'] = $data;
+				$ouput['response'] = true;
 			} else {
 				throw new Exception();
 			}
 
 		} catch ( Exception $e ) {
-			$message['response'] = false;
+			$output['response'] = false;
 		} finally {
-			echo json_encode( $message );
+			echo json_encode( $output );
 			// echo json_encode( $message );
 		}
 	}
