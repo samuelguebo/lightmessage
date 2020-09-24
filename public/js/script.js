@@ -39,7 +39,7 @@ const sendMessage = (message) => {
             messageIndicator.classList.remove('sending')
             if (data.response === false) {
                 messageIndicator.classList.add('failed')
-                messageIndicator.querySelector('td:last-child').innerHtml = 'failed <span class="indicator"></span>'
+                messageIndicator.querySelector('td:last-child').innerHtml = `${data.data} <span class="indicator"></span>`
             } else {
                 messageIndicator.className = 'delivered'
                 messageIndicator.querySelector('td:last-child').innerHtml = 'delivered <span class="indicator"></span>'
@@ -155,11 +155,13 @@ const setSendButtonListener = () => {
                 await sendMessage(message)
             }
 
+            /*
             // Try re-sending failed messages once
             let failedMessages = getFailedMessages();
             for (let message of failedMessages) {
                 await sendMessage(message)
             }
+            */
         })
     }
 }

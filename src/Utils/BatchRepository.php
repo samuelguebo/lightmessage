@@ -22,7 +22,7 @@ class BatchRepository {
 	}
 
 	/**
-	 * Get list of offers
+	 * Get list of entities
 	 * @param string $table
 	 * @param int $limit
 	 * @return array
@@ -32,6 +32,26 @@ class BatchRepository {
 			$db = $this->getTableData( $table );
 			return $db
 					->limit( $limit )
+					->fetch( $table );
+		} catch ( Exception $e ) {
+			return [];
+		}
+	}
+
+	/**
+	 * Get list of entities
+	 * @param string $table
+	 * @param int $key
+	 * @param int $value
+	 * @param int $limit
+	 * @return array
+	 */
+	public function fetchBy( $table, $key, $value, $limit = 3 ) {
+		try {
+			$db = $this->getTableData( $table );
+			return $db
+					->limit( $limit )
+					->where( $key, '=', $value )
 					->fetch( $table );
 		} catch ( Exception $e ) {
 			return [];

@@ -32,6 +32,7 @@ class MessageController extends AbstractController {
 				$response = ( new MessageService( $message, $safe_interval ) )->send();
 
 				if ( !$response ) {
+					$output['data'] = $response;
 					throw new Exception();
 				}
 

@@ -43,7 +43,7 @@ require_once ROOT . '/src/Views/header.php';?>
 						<td><input type="checkbox" name="<?php echo $message['_id'];?>"></td>
 						<td><a href="https://<?php echo trim( $message['wiki'] )?>/wiki/<?php echo $message['page']?>"><?php echo $message['page']?></a></td>
 						<td><?php echo $message['wiki']?></td>
-						<td><?php echo "pending"; ?> <span class="indicator"></span></td>
+						<td><?php echo $message['status'] === null ? "pending" : $message['status']; ?> <span class="indicator"></span></td>
 					</tr>
 					<?php } ?>
 				<?php } ?>

@@ -83,6 +83,24 @@ class BatchController extends AbstractController {
 	}
 
 	/**
+	 * Rest endpoint for route `/batch/summary`
+	 * it matches GET requests
+	 * @param mixed $request
+	 * @return void
+	 */
+	public function summary( $request = null ) {
+			$repository = new BatchRepository;
+			$messages = $repository->fetchBy( 'message', 'status', 'delivered', 100 * 1000 );
+			if ( !empty( $messages ) ) {
+				require VIEW_DIR . "/batch/summary.php";
+			} else {
+
+				require VIEW_DIR . "/404.php";
+
+			}
+	}
+
+	/**
 	 * Rest endpoint for route `/batch/create`
 	 * it matches GET requests
 	 * @param mixed $request

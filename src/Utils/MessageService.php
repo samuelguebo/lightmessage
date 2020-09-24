@@ -31,8 +31,12 @@ class MessageService {
 	 */
 	public function send() {
 		try {
-			if ( $this->isDuplicate() || !$this->canReceiveMessage() ) {
-				throw new Exception();
+			if ( $this->isDuplicate() ) {
+				throw new Exception( 'delivered' );
+			}
+
+			if ( !$this->canReceiveMessage() ) {
+				throw new Exception( 'empty' );
 			}
 
 			// Post message to wiki
@@ -48,7 +52,7 @@ class MessageService {
 				);
 
 			if ( !isset( $res->edit ) ) {
-				throw new Exception();
+				throw new Exception( 'unknown-error' );
 			}
 
 			// If there are no errors, update $message in DB
@@ -57,7 +61,14 @@ class MessageService {
 
 			return true;
 		} catch ( Exception $e ) {
-			return false;
+			// update $message in DB
+			$error = 'unknown-error';
+			if ( in_array( $e->getMessage(), [ 'delivered', 'empty' ] ) ) {
+				$error = $e->getMessage();
+			}
+			$this->message->setStatus( $error );
+			( new BatchRepository )->updateMessage( $this->message );
+			return $error;
 		}
 	}
 
@@ -83,9 +94,6 @@ class MessageService {
 					// Check whether author during the unsafe interval
 					$interval = ( $since - $edit_timestamp ) / 3600;
 					if ( $interval < $this->unsafe_interval && ( $message['user'] === $this->message->author ) ) {
-						// update $message in DB
-						$this->message->setStatus( true );
-						( new BatchRepository )->updateMessage( $this->message );
 						return true;
 					}
 
