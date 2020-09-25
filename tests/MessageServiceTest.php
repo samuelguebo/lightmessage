@@ -36,7 +36,8 @@ class MessageServiceTest extends TestCase {
 			'MediaWiki message delivery'
 		);
 
-		$service = new MessageService( $message );
+		$unsafe_interval = 3 * 24;
+		$service = new MessageService( $message, $unsafe_interval );
 		$this->assertFalse( $service->canReceiveMessage() );
 	}
 }
