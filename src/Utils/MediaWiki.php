@@ -69,6 +69,58 @@ class MediaWiki {
 	}
 
 	/**
+	 * Create new topic on a page that supports Flow
+	 *
+	 * @param mixed $wiki wiki url (without protocol)
+	 * @param mixed $page Name space
+	 * @param mixed $subject Section title
+	 * @param mixed $body text in special markup (wikicode)
+	 * @return string / error
+	 */
+	public function addFlowMessage( $wiki, $page, $subject, $body) {
+		try {
+			// Trimming
+			$wiki = trim( $wiki );
+			$page = trim( $page );
+			$subject = trim( $subject );
+
+			$client = ( new OAuth() )->getClient();
+			$accessToken = new Token(
+				Router::getCookie( 'accessToken' ),
+				Router::getCookie( 'accessSecret' )
+			);
+
+			// Get edit token
+			$token = json_decode( $client->makeOAuthCall(
+				$accessToken,
+				'https://' . $wiki . "/w/api.php" . '?action=query&meta=tokens&format=json'
+			) )->query->tokens->csrftoken;
+
+			// Perform the edit
+			$params = [
+				'action' => 'flow',
+				'page' => $page,
+				'submodule' => 'new-topic',
+				'nttopic' => $subject,
+				'ntcontent' => $body,
+				'token' => $user->getEditToken(),
+			];
+			
+			// Get response
+			$res = json_decode( $client->makeOAuthCall(
+				$accessToken,
+				'https://' . $wiki . "/w/api.php",
+				true,
+				$params
+			) );
+
+			return $res;
+		} catch ( Exception $e ) {
+			return $e->getMessage();
+		}
+	}
+
+	/**
 	 * isPageExistent
 	 *
 	 * @param mixed $wiki
