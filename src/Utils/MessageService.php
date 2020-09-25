@@ -2,6 +2,7 @@
 
 use Exception;
 use Lightmessage\Models\Message;
+use Lightmessage\Models\BatchRepository;
 
 /**
  * Service responsible for handling
@@ -41,6 +42,15 @@ class MessageService {
 
 			// Post message to wiki
 			$batch = ( new BatchRepository )->getBatchById( $this->message->batchId );
+
+			$res = ( new MediaWiki )
+				->addMessage(
+					$this->message->wiki,
+					$this->message->page,
+					$batch['subject'],
+					$batch['body'],
+					"/* " . $batch['subject'] . " - " . $batch['title'] . " */"
+				);
 
 			if ( !isset( $res->edit ) ) {
 				throw new Exception( 'unknown-error' );

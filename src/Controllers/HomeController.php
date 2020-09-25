@@ -1,6 +1,6 @@
 <?php namespace Lightmessage\Controllers;
 
-use Lightmessage\Utils\BatchRepository;
+use Lightmessage\Models\BatchRepository;
 use Lightmessage\Utils\OAuth;
 
 /**

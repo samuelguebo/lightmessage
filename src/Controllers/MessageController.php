@@ -1,8 +1,8 @@
 <?php namespace Lightmessage\Controllers;
 
 use Exception;
+use Lightmessage\Models\BatchRepository;
 use Lightmessage\Models\Message;
-use Lightmessage\Utils\BatchRepository;
 use Lightmessage\Utils\MessageService;
 
 /**

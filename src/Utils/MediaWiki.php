@@ -35,6 +35,10 @@ class MediaWiki {
 				Router::getCookie( 'accessSecret' )
 			);
 
+			// Switch to Flow is target page has Flow enabled
+			if ( $this->hasFlowEnabled( $wiki, $page ) ) {
+				return $this->addFlowMessage( $wiki, $page, $subject, $body, $summary );
+			}
 			// Get edit token
 			$token = json_decode( $client->makeOAuthCall(
 				$accessToken,
@@ -103,7 +107,7 @@ class MediaWiki {
 				'submodule' => 'new-topic',
 				'nttopic' => $subject,
 				'ntcontent' => $body,
-				'token' => $user->getEditToken(),
+				'token' => $token,
 			];
 
 			// Get response
