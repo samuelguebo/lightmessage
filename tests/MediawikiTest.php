@@ -13,8 +13,8 @@ class MediawikiTest extends TestCase {
 	 */
 	public function testHasFlowEnabled() {
 		$message = new Message(
-			'User talk:African Hope',
-			'fr.wikipedia.org', 9,
+			'User talk:وهراني',
+			'ar.wikipedia.org', 9,
 			'Samuel (WMF)'
 		);
 
@@ -23,6 +23,6 @@ class MediawikiTest extends TestCase {
 			$message->page,
 		);
 
-		$this->assertFalse( $hasFlowEnabled );
+		$this->assertTrue( $hasFlowEnabled );
 	}
 }

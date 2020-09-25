@@ -3,6 +3,7 @@
 use Exception;
 use Lightmessage\Models\Batch;
 use Lightmessage\Utils\BatchRepository;
+use Lightmessage\Utils\Logger;
 use Lightmessage\Utils\OAuth;
 use Lightmessage\Utils\Router;
 
@@ -27,6 +28,8 @@ class BatchController extends AbstractController {
 	 * @return void
 	 */
 	public function save( $request = null ) {
+		Logger::Log( [ "about to update batch" ] );
+
 		try {
 			$oauth = new OAuth();
 			$author = $oauth->getProfile();

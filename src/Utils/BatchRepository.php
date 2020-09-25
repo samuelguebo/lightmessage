@@ -11,6 +11,8 @@ use SleekDB\SleekDB;
  */
 class BatchRepository {
 	private $batch;
+	private $messageRepository;
+	private $batchRepository;
 
 	/**
 	 * Constructor
@@ -128,6 +130,7 @@ class BatchRepository {
 					->where( 'page', '=', $message->page )
 					->where( 'wiki', '=', $message->wiki )
 					->where( 'batchId', '=', $message->batchId )
+					->limit( 1 )
 					->fetch() ) > 0;
 		} catch ( Exception $e ) {
 			return false;
@@ -163,6 +166,7 @@ class BatchRepository {
 			$data = (array)$message;
 			return $db->insert( $data );
 		} catch ( Exception $e ) {
+			Logger::log( $e->getMessage() );
 			return $error;
 		}
 	}
@@ -243,12 +247,14 @@ class BatchRepository {
 			$childMessages = $this->wikicodeToMessages( $batch->wikicode, $batch->id, $batch->author );
 			foreach ( $childMessages as $message ) {
 				if ( !$this->messageExists( $message ) ) {
+					Logger::Log( "about to create new message" );
 					$this->createMessage( $message );
 				} else {
 					// Discard update, on purpose
 					// $this->updateMessage( $message );
 				}
 			}
+			return true;
 		} catch ( Exception $e ) {
 			return $error;
 		}

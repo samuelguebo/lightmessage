@@ -17,6 +17,7 @@
 		</div>
 	</div>
 	<script src="/public/js/jquery-3.5.1.min.js"></script>
+	<script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="/public/js/sortable.js"></script>
 	<script src="/public/js/script.js"></script>
 </body>

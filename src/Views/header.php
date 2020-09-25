@@ -25,11 +25,23 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="collapse navbar-collapse container boxed" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
-		<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-		<a class="nav-item nav-link" href="/about">About</a>
+			<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+			<a class="nav-item nav-link" href="/about">About</a>
+			<?php if ( IS_LOGGEDIN ) {?>
+				<a class="nav-item nav-link" href="/batch/create"><i class="fa fa-pencil-square-o"></i> Create batch</a>
+				
+				<div class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bar-chart" aria-hidden="true"></i> Summary
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/batch/summary/delivered">Delievered</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/batch/summary/failures">Failures</a>
+					</div>
+				</div>
+			<?php }?>
+		</div>
 		<?php if ( IS_LOGGEDIN ) {?>
-			<a class="nav-item nav-link" href="/batch/create"><i class="fa fa-pencil-square-o"></i> Create batch</a>
-			</div>
 			<a href="/logout" class="btn btn-success btn-logout"><i class="fa fa-sign-out"></i> Logout</a>
 		<?php }?>
 	</div>

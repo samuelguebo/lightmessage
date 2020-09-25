@@ -77,7 +77,7 @@ class MediaWiki {
 	 * @param mixed $body text in special markup (wikicode)
 	 * @return string / error
 	 */
-	public function addFlowMessage( $wiki, $page, $subject, $body) {
+	public function addFlowMessage( $wiki, $page, $subject, $body ) {
 		try {
 			// Trimming
 			$wiki = trim( $wiki );
@@ -105,7 +105,7 @@ class MediaWiki {
 				'ntcontent' => $body,
 				'token' => $user->getEditToken(),
 			];
-			
+
 			// Get response
 			$res = json_decode( $client->makeOAuthCall(
 				$accessToken,
@@ -138,6 +138,29 @@ class MediaWiki {
 
 		} catch ( Exception $e ) {
 			return true;
+		}
+	}
+
+	/**
+	 * Detect $whether page has flow
+	 *
+	 * @param mixed $wiki
+	 * @param mixed $page
+	 * @return void
+	 */
+	public function hasFlowEnabled( $wiki, $page ) {
+		try {
+			// Trimming
+			$wiki = trim( $wiki );
+			$page = trim( $page );
+
+			$response = file_get_contents( 'https://' . $wiki . "/w/api.php" . "?action=query&prop=revisions&titles=" . urlencode( $page ) . "&rvslots=main&rvprop=content&format=json" );
+
+			$model = array_values( json_decode( $response, true )['query']['pages'] )['0']['revisions']['0']['slots']['main']['contentmodel'];
+			return ( $model === 'flow-board' );
+
+		} catch ( Exception $e ) {
+			return false;
 		}
 	}
 
