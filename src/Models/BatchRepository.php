@@ -1,8 +1,8 @@
 <?php namespace Lightmessage\Models;
 
 use Exception;
-use SleekDB\SleekDB;
 use Lightmessage\Utils\Logger;
+use SleekDB\SleekDB;
 
 /**
  * Respository in charge of Data persistence

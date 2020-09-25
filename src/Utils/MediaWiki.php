@@ -54,7 +54,7 @@ class MediaWiki {
 				'sectiontitle' => $subject,
 				'text' => $body,
 				'summary' => $summary,
-				'watchlist' => 'nochange',
+				'bot' => true,
 				'token' => $token,
 			];
 
