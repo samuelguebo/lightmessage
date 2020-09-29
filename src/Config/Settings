@@ -9,14 +9,15 @@ namespace Lightmessage\Config;
 
 class Settings {
 
-public static $OAUTH_MWURI = 'https://commons.wikimedia.org';
+public static $OAUTH_MWURI = 'https://meta.wikimedia.org';
 public static $OAUTH_CALLBACK_URL = 'http://localhost:5000/auth/mediawiki/callback';
 public static $OAUTH_KEY = '';
 public static $OAUTH_SECRET = '';
-public static $APP_NAME = 'The Noun Uploader';
+public static $APP_NAME = 'Light Message';
 public static $APP_URL = 'http://localhost:5000';
-public static $APP_DESCRIPTION = 'Icon uploader for Wikimedia Commons';
-public static $APP_SLOGAN = 'Upload <a href="https://thenounproject.com/">thenoun icons</a> to Wikimedia Commons, a repository with millions of free-use images!';
+public static $APP_DESCRIPTION = 'Fine-grained delivery of on-wiki notices';
+public static $APP_SLOGAN = 'Fine-grained delivery of on-wiki notices though small batches.';
+public static $NAMESPACE = 'Lightmessage';
 
 // Define routes
 public static $ROUTES = [
@@ -30,24 +31,69 @@ public static $ROUTES = [
 		'protected' => false,
 	],
 	[
+		'endpoint' => '/about',
+		'controller' => 'HomeController',
+		'method' => 'about',
+		'protected' => false,
+	],
+	[
+		'endpoint' => '/test',
+		'controller' => 'TestController',
+		'method' => 'test',
+		'protected' => true,
+	],
+	/**
+	 * Batch endpoints
+	 */
+	[
+		'endpoint' => '/batch/create',
+		'controller' => 'BatchController',
+		'method' => 'create',
+		'protected' => true,
+	],
+	[
+		'endpoint' => '/batch/save',
+		'controller' => 'BatchController',
+		'method' => 'save',
+		'protected' => true,
+	],
+	[
+		'endpoint' => '/batch/view/{param}/',
+		'controller' => 'BatchController',
+		'method' => 'view',
+		'protected' => true,
+	],
+	[
+		'endpoint' => '/batch/summary/delivered',
+		'controller' => 'BatchController',
+		'method' => 'summary',
+		'protected' => true,
+	],
+	[
+		'endpoint' => '/batch/update/{param}/',
+		'controller' => 'BatchController',
+		'method' => 'update',
+		'protected' => true,
+	],
+	[
+		'endpoint' => '/batch/delete/{param}/',
+		'controller' => 'BatchController',
+		'method' => 'delete',
+		'protected' => true,
+	],
+	[
 		'endpoint' => '/test',
 		'controller' => 'TestController',
 		'method' => 'test',
 		'protected' => false,
 	],
-	[
-		'endpoint' => '/test-upload',
-		'controller' => 'TestController',
-		'method' => 'upload',
-		'protected' => false,
-	],
 	/**
-	 * Upload endpoints
+	 * Message delivery endpoints
 	 */
 	[
-		'endpoint' => '/upload',
-		'controller' => 'UploadController',
-		'method' => 'upload',
+		'endpoint' => '/message/send',
+		'controller' => 'MessageController',
+		'method' => 'send',
 		'protected' => true,
 	],
 	/**
