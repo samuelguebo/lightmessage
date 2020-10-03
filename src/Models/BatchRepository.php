@@ -1,7 +1,7 @@
 <?php namespace Lightmessage\Models;
 
 use Exception;
-use Lightmessage\Utils\Logger;
+use Lightmessage\Services\Logger;
 use SleekDB\SleekDB;
 
 /**

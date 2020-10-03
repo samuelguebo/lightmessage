@@ -1,7 +1,7 @@
 <?php namespace Lightmessage\Controllers;
 
 use Lightmessage\Models\BatchRepository;
-use Lightmessage\Utils\OAuth;
+use Lightmessage\Services\OAuth;
 
 /**
  * Controller handling homepage
@@ -17,12 +17,17 @@ class HomeController extends AbstractController {
 		if ( IS_LOGGEDIN ) {
 			$oauth = new OAuth();
 			$user = $oauth->getProfile();
-			$batches = ( new BatchRepository )->fetch( 'batch' );
 
-			require VIEW_DIR . "/home/index.php";
-		} else {
-			require VIEW_DIR . "/home/logged-out.php";
+			if ( !empty( $user ) ) {
+				$batches = ( new BatchRepository )->fetch( 'batch' );
+				require VIEW_DIR . "/home/index.php";
+				return;
+			}
+
+			// If an error occured while getting
 		}
+
+		require VIEW_DIR . "/home/logged-out.php";
 	}
 
 	/**

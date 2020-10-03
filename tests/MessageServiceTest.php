@@ -1,7 +1,7 @@
 <?php
 
 use Lightmessage\Models\Message;
-use Lightmessage\Utils\MessageService;
+use Lightmessage\Services\MessageService;
 use PHPUnit\Framework\TestCase;
 
 class MessageServiceTest extends TestCase {

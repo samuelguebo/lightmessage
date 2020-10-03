@@ -1,4 +1,4 @@
-<?php namespace Lightmessage\Utils;
+<?php namespace Lightmessage\Services;
 
 use Exception;
 use Lightmessage\Models\BatchRepository;

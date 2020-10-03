@@ -1,12 +1,11 @@
-<?php namespace Lightmessage\Utils;
+<?php namespace Lightmessage\Services;
 
 use Exception;
-use Lightmessage\Utils\Logger;
-use MediaWiki\OAuthClient\Token;
 use Lightmessage\Config\Settings;
 use MediaWiki\OAuthClient\Client;
-use MediaWiki\OAuthClient\Consumer;
 use MediaWiki\OAuthClient\ClientConfig;
+use MediaWiki\OAuthClient\Consumer;
+use MediaWiki\OAuthClient\Token;
 
 /**
  * OAuth interacting with MediaWiki-based API
@@ -67,15 +66,18 @@ class OAuth {
 		$ident = $client->identify( $accessToken );
 
 		// User rights
+		$username = $res->query->userinfo->name;
 		$hasRights = ( new MediaWiki )->hasRights(
 			Settings::$META_WIKI,
 			Settings::$REQUIRED_RIGHTS,
-			$res->query->userinfo->name,
+			$username,
 		);
+
 		// Save to cookies
 		Router::setcookie( 'isAllowed', $hasRights );
-		Router::setcookie( 'userinfo', $res->query->userinfo->name );
-		return $res;
+		Router::setcookie( 'userinfo', $username );
+
+		return $username;
 	}
 
 	/**

@@ -1,14 +1,14 @@
 <?php
 
 use Lightmessage\Models\Message;
-use Lightmessage\Utils\MediaWiki;
+use Lightmessage\Services\MediaWiki;
 use PHPUnit\Framework\TestCase;
 
 class MediawikiTest extends TestCase {
 	/**
 	 * testHasFlowEnabled
 	 *
-	 * @covers \Lightmessage\Utils\Mediawiki
+	 * @covers \Lightmessage\Services\Mediawiki
 	 * @return void
 	 */
 	public function testHasFlowEnabled() {
@@ -28,7 +28,7 @@ class MediawikiTest extends TestCase {
 
 	/**
 	 * testHasRights
-	 * @covers \Lightmessage\Utils\Mediawiki
+	 * @covers \Lightmessage\Services\Mediawiki
 	 * @return void
 	 */
 	public function testHasRights() {

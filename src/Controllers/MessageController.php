@@ -3,7 +3,7 @@
 use Exception;
 use Lightmessage\Models\BatchRepository;
 use Lightmessage\Models\Message;
-use Lightmessage\Utils\MessageService;
+use Lightmessage\Services\MessageService;
 
 /**
  * Controller handling Message delivery

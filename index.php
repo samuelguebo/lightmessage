@@ -1,7 +1,7 @@
 <?php
 
 use Lightmessage\Config\Settings;
-use Lightmessage\Utils\Router;
+use Lightmessage\Services\Router;
 
 /**
  * Main entry point for the application

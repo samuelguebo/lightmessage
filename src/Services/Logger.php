@@ -1,4 +1,4 @@
-<?php namespace Lightmessage\Utils;
+<?php namespace Lightmessage\Services;
 
 /**
  * Router responsible for redirecting

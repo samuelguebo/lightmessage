@@ -1,6 +1,6 @@
 <?php
 
-namespace Lightmessage\Utils;
+namespace Lightmessage\Services;
 
 use Lightmessage\Config\Settings;
 use Lightmessage\Controllers\NotFoundController;

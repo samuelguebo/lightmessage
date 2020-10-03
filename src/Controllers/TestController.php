@@ -2,7 +2,7 @@
 
 use Exception;
 use Lightmessage\Models\Message;
-use Lightmessage\Utils\MessageService;
+use Lightmessage\Services\MessageService;
 
 /**
  * Controller handling homepage

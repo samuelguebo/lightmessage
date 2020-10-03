@@ -1,8 +1,8 @@
 <?php namespace Lightmessage\Controllers;
 
 use Exception;
-use Lightmessage\Utils\OAuth;
-use Lightmessage\Utils\Router;
+use Lightmessage\Services\OAuth;
+use Lightmessage\Services\Router;
 
 /**
  * Authentication mechanism

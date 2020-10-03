@@ -1,9 +1,7 @@
 <?php namespace Lightmessage\Controllers;
 
-use Lightmessage\Utils\OAuth;
-use Lightmessage\Utils\Logger;
-use Lightmessage\Utils\Router;
 use Lightmessage\Config\Settings;
+use Lightmessage\Services\OAuth;
 
 /**
  * Abstract class for Controllers

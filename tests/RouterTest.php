@@ -1,5 +1,5 @@
 <?php
-use Lightmessage\Utils\Router;
+use Lightmessage\Services\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase {
