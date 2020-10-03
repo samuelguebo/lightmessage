@@ -1,11 +1,12 @@
 <?php namespace Lightmessage\Utils;
 
 use Exception;
+use Lightmessage\Utils\Logger;
+use MediaWiki\OAuthClient\Token;
 use Lightmessage\Config\Settings;
 use MediaWiki\OAuthClient\Client;
-use MediaWiki\OAuthClient\ClientConfig;
 use MediaWiki\OAuthClient\Consumer;
-use MediaWiki\OAuthClient\Token;
+use MediaWiki\OAuthClient\ClientConfig;
 
 /**
  * OAuth interacting with MediaWiki-based API
@@ -52,27 +53,27 @@ class OAuth {
 		$res = json_decode( $res );
 
 		if ( isset( $res->error->code ) && $res->error->code === 'mwoauth-invalid-authorization' ) {
-			// We're not authorized!
-			echo 'You haven\'t authorized this application yet! Go <a href="' . htmlspecialchars( $_SERVER['SCRIPT_NAME'] ) . '?action=authorize">here</a> to do that.';
-			echo '<hr>';
 			return;
 		}
 
 		if ( !isset( $res->query->userinfo ) ) {
-			header( "HTTP/1.1 $this->errorCode Internal Server Error" );
-			echo 'Bad API response: <pre>' . htmlspecialchars( var_export( $res, 1 ) ) . '</pre>';
-			exit( 0 );
+			return;
 		}
 		if ( isset( $res->query->userinfo->anon ) ) {
-			header( "HTTP/1.1 $this->errorCode Internal Server Error" );
-			echo 'Not logged in. (How did that happen?)';
-			exit( 0 );
+			return;
 		}
 
 		// Identify
 		$ident = $client->identify( $accessToken );
 
-		// Save to cookie
+		// User rights
+		$hasRights = ( new MediaWiki )->hasRights(
+			Settings::$META_WIKI,
+			Settings::$REQUIRED_RIGHTS,
+			$res->query->userinfo->name,
+		);
+		// Save to cookies
+		Router::setcookie( 'isAllowed', $hasRights );
 		Router::setcookie( 'userinfo', $res->query->userinfo->name );
 		return $res;
 	}
@@ -154,4 +155,25 @@ class OAuth {
 		return $token;
 	}
 
+	/**
+	 * Indicate whether the current user
+	 * is logged in
+	 *
+	 * @return void
+	 */
+	public static function isLoggedIn() {
+		$isLoggedIn = Router::getCookie( 'loggedIn' );
+		return ( true === $isLoggedIn );
+	}
+
+	/**
+	 * Indicate whether the current has enough rights
+	 * to access the product
+	 *
+	 * @return void
+	 */
+	public static function isAllowed() {
+		$isAllowed = Router::getCookie( 'isAllowed' );
+		return ( true === $isAllowed );
+	}
 }

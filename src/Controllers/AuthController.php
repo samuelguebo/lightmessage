@@ -56,20 +56,7 @@ class AuthController extends AbstractController {
 	 * @return void
 	 */
 	public function logout( $request ) {
-		Router::setCookie( 'loggedIn', false );
 		Router::resetSession();
 		header( 'Location: /' );
 	}
-
-	/**
-	 * Indicate whether the current user
-	 * is logged in
-	 *
-	 * @return void
-	 */
-	public static function isLoggedIn() {
-		$isLoggedIn = Router::getCookie( 'loggedIn' );
-		return ( true === $isLoggedIn );
-	}
-
 }

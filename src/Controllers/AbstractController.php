@@ -1,5 +1,8 @@
 <?php namespace Lightmessage\Controllers;
 
+use Lightmessage\Utils\OAuth;
+use Lightmessage\Utils\Logger;
+use Lightmessage\Utils\Router;
 use Lightmessage\Config\Settings;
 
 /**
@@ -26,11 +29,16 @@ abstract class AbstractController {
 		define( 'VIEW_DIR', dirname( __DIR__ ) . '/Views' );
 
 		// Check wether wether user is logged in or not
-		define( 'IS_LOGGEDIN', AuthController::isLoggedIn() );
-
+		define( 'IS_LOGGEDIN', OAuth::isLoggedIn() );
 		if ( ( $route['protected'] ) ) {
-			if ( !AuthController::isLoggedIn() ) {
+			if ( !OAuth::isLoggedIn() ) {
 				AuthController::unauthorized( $request );
+				exit();
+			}
+
+			if ( !OAuth::isAllowed() ) {
+				$error = "Sorry, you are not allowed to access this page.";
+				NotFoundController::redirect( $request, $error );
 				exit();
 			}
 		}

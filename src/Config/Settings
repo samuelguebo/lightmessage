@@ -18,6 +18,8 @@ public static $APP_URL = 'http://localhost:5000';
 public static $APP_DESCRIPTION = 'Fine-grained delivery of on-wiki notices';
 public static $APP_SLOGAN = 'Fine-grained delivery of on-wiki notices though small batches.';
 public static $NAMESPACE = 'Lightmessage';
+public static $META_WIKI = 'meta.wikimedia.org';
+public static $REQUIRED_RIGHTS = [ 'staff' ];
 
 // Define routes
 public static $ROUTES = [

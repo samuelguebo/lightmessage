@@ -24,4 +24,20 @@ class NotFoundController extends AbstractController {
 
 		echo json_encode( $message );
 	}
+
+	/**
+	 * Redirect to an error message
+	 * in order to mimic a 404 page
+	 *
+	 * @param mixed $request
+	 * @param mixed $error
+	 * @return void
+	 */
+	public static function redirect( $request = null, $error = null ) {
+		if ( $error === null ) {
+			$error = "The page does not exist";
+		}
+
+		require VIEW_DIR . "/404.php";
+	}
 }

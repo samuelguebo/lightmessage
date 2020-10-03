@@ -17,8 +17,8 @@ class HomeController extends AbstractController {
 		if ( IS_LOGGEDIN ) {
 			$oauth = new OAuth();
 			$user = $oauth->getProfile();
-			$batches = ( new BatchRepository )->fetch( 'batch', 1000 );
-			// print_r( $batches );
+			$batches = ( new BatchRepository )->fetch( 'batch' );
+
 			require VIEW_DIR . "/home/index.php";
 		} else {
 			require VIEW_DIR . "/home/logged-out.php";

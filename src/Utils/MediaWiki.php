@@ -125,11 +125,36 @@ class MediaWiki {
 	}
 
 	/**
+	 * Check whether an account has certain rights
+	 *
+	 * @param string $wiki
+	 * @param mixed $rights
+	 * @param string $user
+	 * @return bool
+	 */
+	public function hasRights( $wiki, $rights, $user ) {
+		$rights = (array)$rights;
+
+		$response = file_get_contents( 'https://' . $wiki . "/w/api.php?action=query&meta=globaluserinfo&format=json&guiuser=" . urlencode( $user ) . "&guiprop=groups" );
+		$results = json_decode( $response, true )['query']['globaluserinfo'];
+		if ( array_key_exists( "missing", $results ) ) {
+			return false;
+		}
+
+		// Count interesctions, the total should match count($rights)
+		if ( count( array_intersect( $results['groups'], $rights ) ) === count( $rights ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * isPageExistent
 	 *
 	 * @param mixed $wiki
 	 * @param mixed $page
-	 * @return void
+	 * @return bool
 	 */
 	public function isPageExistent( $wiki, $page ) {
 		try {
@@ -138,6 +163,7 @@ class MediaWiki {
 			$page = trim( $page );
 
 			$response = file_get_contents( 'https://' . $wiki . "/w/api.php" . "?action=query&prop=revisions&titles=" . urlencode( $page ) . "&rvslots=*&rvprop=content&format=json" );
+
 			return !array_key_exists( "-1", json_decode( $response, true )['query']['pages'] );
 
 		} catch ( Exception $e ) {
@@ -150,7 +176,7 @@ class MediaWiki {
 	 *
 	 * @param mixed $wiki
 	 * @param mixed $page
-	 * @return void
+	 * @return bool
 	 */
 	public function hasFlowEnabled( $wiki, $page ) {
 		try {
@@ -193,6 +219,7 @@ class MediaWiki {
 			$query_url .= "&titles=" . urlencode( $page ) . "&rvlimit=$limit&format=json&origin=*";
 
 			$response = file_get_contents( $query_url );
+			// print_r( [ 'response', $response ] );
 			return array_values( json_decode( $response, true )['query']['pages'] )['0']['revisions'];
 		} catch ( Exception $e ) {
 			return [];

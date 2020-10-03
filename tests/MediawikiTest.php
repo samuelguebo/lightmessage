@@ -25,4 +25,23 @@ class MediawikiTest extends TestCase {
 
 		$this->assertTrue( $hasFlowEnabled );
 	}
+
+	/**
+	 * testHasRights
+	 * @covers \Lightmessage\Utils\Mediawiki
+	 * @return void
+	 */
+	public function testHasRights() {
+		$wiki = 'meta.wikimedia.org';
+		$rights = [ 'otrs-member', 'steward' ];
+		$user = '-revi';
+
+		$hasRights = ( new MediaWiki )->hasRights(
+			$wiki,
+			$rights,
+			$user,
+		);
+
+		$this->assertTrue( $hasRights );
+	}
 }

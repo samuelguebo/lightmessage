@@ -81,7 +81,6 @@ class MessageService {
 	public function isDuplicate() {
 		$messages = $this->getPostedMessages();
 		try {
-
 			foreach ( $messages as $message ) {
 				// Logger::log( $message );
 				$edit_timestamp = strtotime( $message['timestamp'] );
@@ -91,10 +90,9 @@ class MessageService {
 
 				// continue verification if edit was made within safe interval
 				if ( ( $since < $edit_timestamp ) ) {
-
 					// Check whether author during the unsafe interval
 					$interval = ( $since - $edit_timestamp ) / 3600;
-					if ( $interval < $this->unsafe_interval && ( $message['user'] === $this->message->author || $message['user'] === "MediaWiki message delivery" ) ) {
+					if ( $interval < $this->unsafe_interval && ( $message['user'] === $this->message->author || $message['user'] === "MediaWiki message  delivery" || $message['user'] === "Flow talk page manager" ) ) {
 						return true;
 					}
 
