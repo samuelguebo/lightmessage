@@ -1,7 +1,8 @@
 <?php namespace Lightmessage\Controllers;
 
-use Lightmessage\Models\BatchRepository;
 use Lightmessage\Services\OAuth;
+use Lightmessage\Config\Settings;
+use Lightmessage\Models\BatchRepository;
 
 /**
  * Controller handling homepage
@@ -37,6 +38,6 @@ class HomeController extends AbstractController {
 	 * @return void
 	 */
 	public function about( $request = null ) {
-			require VIEW_DIR . "/home/about.php";
+		header( 'Location: ' . Settings::$ABOUT_PAGE );
 	}
 }

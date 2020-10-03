@@ -20,6 +20,7 @@ public static $APP_SLOGAN = 'Fine-grained delivery of on-wiki notices though sma
 public static $NAMESPACE = 'Lightmessage';
 public static $META_WIKI = 'meta.wikimedia.org';
 public static $REQUIRED_RIGHTS = [ 'staff' ];
+public static $ABOUT_PAGE = '';
 
 // Define routes
 public static $ROUTES = [
