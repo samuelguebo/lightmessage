@@ -2,7 +2,7 @@
 
 use Exception;
 use Lightmessage\Models\Batch;
-use Lightmessage\Services\BatchRepository;
+use Lightmessage\Models\BatchRepository;
 use Lightmessage\Services\Logger;
 use Lightmessage\Services\OAuth;
 use Lightmessage\Services\Router;

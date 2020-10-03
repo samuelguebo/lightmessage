@@ -1,9 +1,8 @@
 <?php namespace Lightmessage\Services;
 
 /**
- * Router responsible for redirecting
- * incoming request and mapping them
- * to the correct controller
+ * Service helping print data in JavaScript console
+ * and which can come in handy during debugging
  */
 class Logger {
 	/**

@@ -146,6 +146,10 @@ const isset = (object) => {
     return (typeof object !== 'undefined' && object !== null);
 }
 
+/**
+ * Attach a set of instructions 
+ * to the Send button
+ */
 const setSendButtonListener = () => {
     if (isset(sendButton)) {
         sendButton.addEventListener('click', async (e) => {
@@ -166,15 +170,14 @@ const setSendButtonListener = () => {
     }
 }
 
+/**
+ * Enable the "Check all" feature
+ */
 const setCheckAllListener = () => {
     if (isset(checkAllListener)) {
-        checkAllListener.addEventListener('click', (e) => {
-            for (checkbox of document.querySelectorAll('input[type=checkbox]')) {
-                if (this.checked) {
-                    checkbox.checked = false
-                } else {
-                    checkbox.checked = true
-                }
+        checkAllListener.addEventListener('click', () => {
+            for (checkbox of document.querySelectorAll('input[type=checkbox]:not(#check-all)')) {
+                checkbox.checked = (checkAllListener.checked) ? true : false
             }
         })
     }

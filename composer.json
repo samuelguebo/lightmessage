@@ -1,7 +1,7 @@
 {
-    "name": "sguebo/thenoun-project",
+    "name": "sguebo/lightmessage",
     "license": "MIT",
-    "description": "Drag and drop uploader for icons from The Noun project.",
+    "description": "Fine grained delivery of on-wiki messages in small batches",
 
     "authors": [{
         "name": "Samuel Guebo",

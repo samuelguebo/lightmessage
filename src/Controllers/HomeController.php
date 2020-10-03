@@ -1,8 +1,8 @@
 <?php namespace Lightmessage\Controllers;
 
-use Lightmessage\Services\OAuth;
 use Lightmessage\Config\Settings;
 use Lightmessage\Models\BatchRepository;
+use Lightmessage\Services\OAuth;
 
 /**
  * Controller handling homepage
