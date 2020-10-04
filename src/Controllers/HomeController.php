@@ -15,9 +15,17 @@ class HomeController extends AbstractController {
 	 * @return void
 	 */
 	public function index( $request = null ) {
-		if ( IS_LOGGEDIN ) {
-			$oauth = new OAuth();
+		$oauth = new OAuth();
+
+		if ( $oauth->isLoggedIn() ) {
 			$user = $oauth->getProfile();
+
+			// Check user rights
+			if ( !$oauth->isAllowed() ) {
+				$error = "Sorry, you are not allowed to access this page.";
+				NotFoundController::redirect( $request, $error );
+				return;
+			}
 
 			if ( !empty( $user ) ) {
 				$batches = ( new BatchRepository )->fetch( 'batch' );
