@@ -11,12 +11,13 @@
 				<!-- Title -->
 				<div class="form-group">
 					<label for="wiki">Title of batch</label>
-					<input type="text" class="form-control" name="title" placeholder="Wikitech newsletter (Spanish)" value="<?php echo ( !empty( $batch['title'] ) ? $batch['title'] : '' );?>">
+					<input type="text" class="form-control" name="title" placeholder="Insert title here" value="<?php echo ( !empty( $batch['title'] ) ? $batch['title'] : '' );?>">
 				</div>
 
 				<!-- Wikicode -->
 				<div class="form-group">
-					<textarea name="wikicode" class="form-control" rows="5" cols="80" placeholder="Insert recipient list as wikicode"><?php echo ( !empty( $batch['wikicode'] ) ? $batch['wikicode'] : '' );?></textarea>
+					<label for="wikicode">Recipient list as wikicode</label>
+					<textarea name="wikicode" class="form-control" rows="5" cols="80" placeholder="Format: * {{ target | page = User talk:African Hope | site = fr.wikipedia.org }} "><?php echo ( !empty( $batch['wikicode'] ) ? $batch['wikicode'] : '' );?></textarea>
 				</div>
 				
 				<!-- Subject -->

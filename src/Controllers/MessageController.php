@@ -26,10 +26,9 @@ class MessageController extends AbstractController {
 				$data = json_decode( $data['data'], true );
 				$message = ( new BatchRepository )->getMessageById( $data['id'] );
 				$message = Message::fromArray( $message );
+				$batch = 
 
-				// Set a safe interval of 3 days hours between next delivery
-				$safe_interval = 3 * 24;
-				$response = ( new MessageService( $message, $safe_interval ) )->send();
+				$response = ( new MessageService( $message, $batch ) )->send();
 
 				if ( !$response ) {
 					$output['data'] = $response;

@@ -31,7 +31,7 @@ require_once ROOT . '/src/Views/header.php';?>
 			</thead>
 			<tbody>
 				<?php foreach ( $messages as $message ) {?>
-					<?php if ( $message['status'] === true ) {?>
+					<?php if ( $message['status'] === true || $message['status'] === 'delivered' ) {?>
 					<tr id="message-<?php echo $message['_id'];?>" class="delivered">
 						<td></td>
 						<td><a href="https://<?php echo $message['wiki']?>/wiki/<?php echo trim( $message['page'] )?>"><?php echo $message['page']?></a></td>
