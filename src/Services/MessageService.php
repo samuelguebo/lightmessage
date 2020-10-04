@@ -1,6 +1,7 @@
 <?php namespace Lightmessage\Services;
 
 use Exception;
+use Lightmessage\Models\Batch;
 use Lightmessage\Models\BatchRepository;
 use Lightmessage\Models\Message;
 
@@ -11,18 +12,18 @@ use Lightmessage\Models\Message;
  */
 class MessageService {
 	private $message;
-	private $unsafe_interval;
+	private $batch;
 
 	/**
 	 * Constructor
 	 *
 	 * @param mixed $message
-	 * @param int $unsafe_interval interval during which not new message should be posted
+	 * @param Batch $batch parent batch
 	 * @return void
 	 */
-	public function __construct( Message $message, $unsafe_interval ) {
+	public function __construct( Message $message, $batch ) {
 		$this->message = $message;
-		$this->unsafe_interval = $unsafe_interval;
+		$this->batch = $batch;
 	}
 
 	/**
@@ -41,15 +42,14 @@ class MessageService {
 			}
 
 			// Post message to wiki
-			$batch = ( new BatchRepository )->getBatchById( $this->message->batchId );
 
 			$res = ( new MediaWiki )
 				->addMessage(
 					$this->message->wiki,
 					$this->message->page,
-					$batch['subject'],
-					$batch['body'],
-					"/* " . $batch['subject'] . " - " . $batch['title'] . " */"
+					$this->batch->subject,
+					$this->batch->body,
+					"/* " . $this->batch->subject . " - " . $this->batch->title . " */"
 				);
 
 			if ( !isset( $res->edit ) ) {
@@ -79,25 +79,12 @@ class MessageService {
 	 * @return bool
 	 */
 	public function isDuplicate() {
-		$messages = $this->getPostedMessages();
+		$sections = $this->getSections();
 		try {
-			foreach ( $messages as $message ) {
-				// Logger::log( $message );
-				$edit_timestamp = strtotime( $message['timestamp'] );
-
-				// Get timestamp of safe interval
-				$since = strtotime( "-" . $this->unsafe_interval . " hour" );
-
-				// continue verification if edit was made within safe interval
-				if ( ( $since < $edit_timestamp ) ) {
-					// Check whether author during the unsafe interval
-					$interval = ( $since - $edit_timestamp ) / 3600;
-					if ( $interval < $this->unsafe_interval && ( $message['user'] === $this->message->author || $message['user'] === "MediaWiki message  delivery" || $message['user'] === "Flow talk page manager" ) ) {
-						return true;
-					}
-
+			foreach ( $sections as $section ) {
+				if ( $section['line'] === $this->batch->subject ) {
+					return true;
 				}
-
 			}
 		} catch ( Exception $e ) {
 
@@ -129,6 +116,18 @@ class MessageService {
 			$this->message->wiki,
 			$this->message->page,
 			$this->message->author
+		);
+	}
+
+	/**
+	 * getSections
+	 *
+	 * @return mixed
+	 */
+	public function getSections() {
+		return ( new MediaWiki )->getPageSections(
+			$this->message->wiki,
+			$this->message->page
 		);
 	}
 }

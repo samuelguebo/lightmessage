@@ -225,4 +225,27 @@ class MediaWiki {
 			return [];
 		}
 	}
+
+	/**
+	 * Collect a list of sections from a page
+	 *
+	 * @param mixed $wiki
+	 * @param mixed $page
+	 * @return array
+	 */
+	public function getPageSections( $wiki, $page ) {
+		try{
+			// Make sure page exists
+			if ( !$this->isPageExistent( $wiki, $page ) ) {
+				throw new Exception();
+			}
+			$query_url = "https://" . $wiki . "/w/api.php" . "?action=parse&prop=sections";
+			$query_url .= "&page=" . urlencode( $page ) . "&format=json&origin=*";
+			$response = file_get_contents( $query_url );
+
+			return array_values( json_decode( $response, true )['parse']['sections'] );
+		} catch ( Exception $e ) {
+			return [];
+		}
+	}
 }
