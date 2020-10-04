@@ -1,43 +1,59 @@
 <?php
 
+use Lightmessage\Models\Batch;
 use Lightmessage\Models\Message;
 use Lightmessage\Services\MessageService;
 use PHPUnit\Framework\TestCase;
 
 class MessageServiceTest extends TestCase {
+	protected $batch;
+	protected $message;
+
 	/**
-	 * testIsDuplicate
+	 * Fixture method for populating predefined
+	 * data accessible accessible to other
+	 * methods of the class
 	 *
-	 * @covers \MessageService\
 	 * @return void
 	 */
-	public function testIsDuplicate() {
-		$message = new Message(
+	protected function setUp(): void {
+		$this->message = new Message(
 			'User talk:African Hope',
 			'fr.wikipedia.org', 9,
 			'Samuel (WMF)'
 		);
 
-		$unsafe_interval = 3 * 24;
-		$service = new MessageService( $message, $unsafe_interval );
+		$this->batch = new Batch(
+			null, null, 'Test avec ou sans Flow',
+			null, null
+		);
+	}
+
+	/**
+	 * testIsDuplicate
+	 *
+	 * @covers \MessageService\isDuplicate
+	 * @return void
+	 */
+	public function testIsDuplicate() {
+		$service = new MessageService( $this->message, $this->batch );
 		$this->assertTrue( $service->isDuplicate() );
 	}
 
 	/**
 	 * testCanReceiveMessage
 	 *
-	 * @covers \MessageService\
+	 * @covers \MessageService\canReceiveMessage
 	 * @return void
 	 */
 	public function testCanReceiveMessage() {
-		$message = new Message(
+		$this->message = new Message(
 			'User talk:Samuel (WMF)',
 			'bn.wikisource.org', 7,
 			'MediaWiki message delivery'
 		);
 
-		$unsafe_interval = 3 * 24;
-		$service = new MessageService( $message, $unsafe_interval );
+		$service = new MessageService( $this->message, $this->batch );
 		$this->assertFalse( $service->canReceiveMessage() );
 	}
 }
