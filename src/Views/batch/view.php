@@ -5,10 +5,10 @@
 require_once ROOT . '/src/Views/header.php';?>
  
  <section class="batch">
-	<h3><?php echo $batch['title'];?> 
+	<h4><?php echo $batch['title'];?> 
 	<a href="/batch/update/<?php echo $batch['_id']?>" class="btn btn-warning btn-sm btn-update"><i class="fa fa-edit"></i> Edit</a>
 	<a href="/batch/delete/<?php echo $batch['_id']?>" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i> Delete</a>
-	</h3>
+	</h4>
 	<div class="card">
 		<div class="card-body">
 		<span class="badge badge-success">content</span>
@@ -31,19 +31,19 @@ require_once ROOT . '/src/Views/header.php';?>
 			</thead>
 			<tbody>
 				<?php foreach ( $messages as $message ) {?>
-					<?php if ( $message['status'] === true || $message['status'] === 'delivered' ) {?>
-					<tr id="message-<?php echo $message['_id'];?>" class="delivered">
+					<?php if ( $message['status'] === $statusDelivered ) {?>
+					<tr id="message-<?php echo $message['_id'];?>" class="<?php echo $message['status']?>">
 						<td></td>
 						<td><a href="https://<?php echo $message['wiki']?>/wiki/<?php echo trim( $message['page'] )?>"><?php echo $message['page']?></a></td>
 						<td><?php echo $message['wiki']?></td>
 						<td><?php echo "delivered"; ?> <span class="indicator"></span></td>
 					</tr>
 					<?php } else {?>
-					<tr id="message-<?php echo $message['_id'];?>" batchid="<?php echo $batch['_id']?>">
+					<tr id="message-<?php echo $message['_id'];?>" batchid="<?php echo $batch['_id']?>" class="<?php echo $message['status']?>">
 						<td><input type="checkbox" name="<?php echo $message['_id'];?>"></td>
 						<td><a href="https://<?php echo trim( $message['wiki'] )?>/wiki/<?php echo $message['page']?>"><?php echo $message['page']?></a></td>
 						<td><?php echo $message['wiki']?></td>
-						<td><?php echo $message['status'] === null ? "pending" : $message['status']; ?> <span class="indicator"></span></td>
+						<td><?php echo $message['status']?> <span class="indicator"></span></td>
 					</tr>
 					<?php } ?>
 				<?php } ?>

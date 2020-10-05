@@ -4,10 +4,11 @@ use Exception;
 use MediaWiki\OAuthClient\Token;
 
 /**
- * Oauth mechanism
+ * Module that handle interactions with
+ * MediaWiki API
  */
 
-class MediaWiki {
+class ApiMediaWiki {
 	private $gTokenSecret;
 	private $gTokenKey;
 	private $errorCode = 200;

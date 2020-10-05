@@ -40,4 +40,27 @@ class Batch {
 	public function setId( $id ) {
 		$this->id = $id;
 	}
+
+	/**
+	 * fromArray
+	 *
+	 * @param mixed $batch
+	 * @return void
+	 */
+	public static function fromArray( $batch ) {
+		try {
+			$batchObj = new Batch(
+				$batch['title'],
+				$batch['wikicode'],
+				$batch['subject'],
+				$batch['body'],
+				$batch['author']
+			);
+			$batchObj->setId( $batch['_id'] );
+
+			return $batchObj;
+		} catch ( Exception $e ) {
+			return [];
+		}
+	}
 }

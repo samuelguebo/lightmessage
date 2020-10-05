@@ -23,6 +23,7 @@ class HomeController extends AbstractController {
 			// Check user rights
 			if ( !$oauth->isAllowed() ) {
 				$error = "Sorry, you are not allowed to access this page.";
+				$error .= " You need the following rights: " . implode( " ,", Settings::$REQUIRED_RIGHTS );
 				NotFoundController::redirect( $request, $error );
 				return;
 			}

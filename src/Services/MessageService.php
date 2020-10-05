@@ -18,8 +18,8 @@ class MessageService {
 	 * Constructor
 	 *
 	 * @param mixed $message
-	 * @param Batch $batch parent batch
-	 * @return void
+	 * @param Batch $batch Parent batch
+	 * @return string Error message
 	 */
 	public function __construct( Message $message, $batch ) {
 		$this->message = $message;
@@ -29,21 +29,22 @@ class MessageService {
 	/**
 	 * Post messages only if certain conditions are met.
 	 * Avoid duplication or posting to non-existent page
-	 * @return mixed
+	 * @return bool
 	 */
 	public function send() {
 		try {
-			if ( $this->isDuplicate() ) {
-				throw new Exception( 'delivered' );
-			}
-
+			// Check whether page exists
 			if ( !$this->canReceiveMessage() ) {
-				throw new Exception( 'empty' );
+				throw new Exception( Message::MISSING );
 			}
 
-			// Post message to wiki
+			// Check for duplication
+			if ( $this->isDuplicate() ) {
+				throw new Exception( Message::DELIVERED );
+			}
 
-			$res = ( new MediaWiki )
+			// As there are no errors, post message to page
+			$res = ( new ApiMediaWiki )
 				->addMessage(
 					$this->message->wiki,
 					$this->message->page,
@@ -52,24 +53,21 @@ class MessageService {
 					"/* " . $this->batch->subject . " - " . $this->batch->title . " */"
 				);
 
-			if ( !isset( $res->edit ) ) {
-				throw new Exception( 'unknown-error' );
+			if ( isset( $res->error ) ) {
+				throw new Exception( Message::FAILED );
 			}
 
 			// If there are no errors, update $message in DB
-			$this->message->setStatus( true );
+			$this->message->setStatus( MESSAGE::DELIVERED );
 			( new BatchRepository )->updateMessage( $this->message );
 
-			return true;
-		} catch ( Exception $e ) {
-			// update $message in DB
-			$error = 'unknown-error';
-			if ( in_array( $e->getMessage(), [ 'delivered', 'empty' ] ) ) {
-				$error = $e->getMessage();
-			}
-			$this->message->setStatus( $error );
+			return MESSAGE::DELIVERED;
+		} catch ( Exception $error ) {
+
+			// Update database with message error
+			$this->message->setStatus( $error->getMessage() );
 			( new BatchRepository )->updateMessage( $this->message );
-			return $error;
+			return $error->getMessage();
 		}
 	}
 
@@ -100,7 +98,7 @@ class MessageService {
 	 * @return void
 	 */
 	public function canReceiveMessage() {
-		return ( new MediaWiki )->isPageExistent(
+		return ( new ApiMediaWiki )->isPageExistent(
 			$this->message->wiki,
 			$this->message->page
 		);
@@ -112,7 +110,7 @@ class MessageService {
 	 * @return mixed
 	 */
 	public function getPostedMessages() {
-		return ( new MediaWiki )->getPageEdits(
+		return ( new ApiMediaWiki )->getPageEdits(
 			$this->message->wiki,
 			$this->message->page,
 			$this->message->author
@@ -125,7 +123,7 @@ class MessageService {
 	 * @return mixed
 	 */
 	public function getSections() {
-		return ( new MediaWiki )->getPageSections(
+		return ( new ApiMediaWiki )->getPageSections(
 			$this->message->wiki,
 			$this->message->page
 		);

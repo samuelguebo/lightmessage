@@ -14,6 +14,10 @@ class Message {
 	public $author;
 	public $batchId;
 	public $id;
+	public const PENDING 	= 'pending';
+	public const DELIVERED 	= 'delivered';
+	public const FAILED 	= 'failed';
+	public const MISSING 	= 'not found';
 
 	/**
 	 * Default constructor
@@ -29,6 +33,7 @@ class Message {
 		$this->wiki = $wiki;
 		$this->batchId = $batchId;
 		$this->author = $author;
+		$this->status = self::PENDING;
 	}
 
 	/**

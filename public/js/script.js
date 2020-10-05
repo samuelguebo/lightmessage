@@ -17,7 +17,9 @@
 let messagesTable = document.getElementById('messages-table')
 let sendButton = document.getElementById('sendButton')
 let checkAllListener = document.getElementById('check-all')
-
+const statusDelivered = 'delivered'
+const statusFailed = 'failed'
+const statusPending = 'pending'
 /**
  * Interact with API to post message
  * and return response
@@ -37,19 +39,21 @@ const sendMessage = (message) => {
         .then(res => res.json())
         .then(data => {
             messageIndicator.classList.remove('sending')
-            if (data.response === false) {
-                messageIndicator.classList.add('failed')
-                messageIndicator.querySelector('td:last-child').innerHtml = `${data.data} <span class="indicator"></span>`
+
+            if (data.response !== statusDelivered) {
+                messageIndicator.classList.add(statusFailed)
+                messageIndicator.querySelector('td:last-child').innerHTML = `${data.response} <span class="indicator"></span>`
             } else {
-                messageIndicator.className = 'delivered'
-                messageIndicator.querySelector('td:last-child').innerHtml = 'delivered <span class="indicator"></span>'
+                messageIndicator.className = statusDelivered
+                messageIndicator.querySelector('td:last-child').innerHTML = `${data.response} <span class="indicator"></span>`
             }
+
 
         })
         .catch(e => {
             console.log(e)
-            messageIndicator.classList.add('failed')
-            messageIndicator.querySelector('td:last-child').innerText = 'failed'
+            messageIndicator.classList.add(statusFailed)
+            messageIndicator.querySelector('td:last-child').innerText = statusFailed
 
         })
 }
@@ -101,7 +105,7 @@ const getFailedMessages = () => {
         for (let row of rows) {
 
             // Check whether message was already delivered
-            if (Array.from(row.classList).indexOf('failed') < 0) {
+            if (Array.from(row.classList).indexOf(statusFailed) < 0) {
 
                 let id = row.id.replace('message-', '')
                 let page = row.cells[1].innerText

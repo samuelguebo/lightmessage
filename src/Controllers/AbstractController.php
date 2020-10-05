@@ -27,7 +27,6 @@ abstract class AbstractController {
 		define( 'VIEW_DIR', dirname( __DIR__ ) . '/Views' );
 
 		// Check wether wether user is logged in or not
-		define( 'IS_LOGGEDIN', OAuth::isLoggedIn() );
 		if ( ( $route['protected'] ) ) {
 			if ( !OAuth::isLoggedIn() ) {
 				AuthController::unauthorized( $request );
@@ -36,10 +35,14 @@ abstract class AbstractController {
 
 			if ( !OAuth::isAllowed() ) {
 				$error = "Sorry, you are not allowed to access this page.";
+				$error .= " You need the following rights: " . implode( " ,", Settings::$REQUIRED_RIGHTS );
 				NotFoundController::redirect( $request, $error );
 				exit();
 			}
 		}
+
+		define( 'IS_LOGGEDIN', OAuth::isLoggedIn() );
+		define( 'IS_ALLOWED', OAuth::isAllowed() );
 	}
 
 }

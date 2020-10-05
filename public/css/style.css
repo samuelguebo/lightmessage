@@ -226,7 +226,8 @@ tr.sending .indicator::after {
 	right: 10%;
 }
 
-.failed td:last-child {
+.failed td:last-child,
+.not.found td:last-child {
 	color: crimson;
 }
 

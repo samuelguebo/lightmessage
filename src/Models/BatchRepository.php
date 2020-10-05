@@ -186,7 +186,7 @@ class BatchRepository {
 			$childMessages = $this->wikicodeToMessages( $res['wikicode'], $res['_id'], $res['author'] );
 			// Logger::log( [ 'childMessages', $childMessages ] );
 			foreach ( $childMessages as $message ) {
-				$message->setStatus( false );
+				$message->setStatus( Message::PENDING );
 				$this->createMessage( $message );
 			}
 

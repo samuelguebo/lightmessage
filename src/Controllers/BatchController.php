@@ -3,7 +3,7 @@
 use Exception;
 use Lightmessage\Models\Batch;
 use Lightmessage\Models\BatchRepository;
-use Lightmessage\Services\Logger;
+use Lightmessage\Models\Message;
 use Lightmessage\Services\OAuth;
 use Lightmessage\Services\Router;
 
@@ -28,7 +28,7 @@ class BatchController extends AbstractController {
 	 * @return void
 	 */
 	public function save( $request = null ) {
-		Logger::Log( [ "about to update batch" ] );
+		// Logger::Log( [ "about to update batch" ] );
 
 		try {
 			$oauth = new OAuth();
@@ -58,10 +58,10 @@ class BatchController extends AbstractController {
 				// Redirect to home if there are no errors
 				header( "Location: /" );
 			} else {
-				throw new Exception;
+				throw new Exception( "An error occured while saving batch." );
 			}
 		} catch ( Exception $e ) {
-			require VIEW_DIR . "/404.php";
+			NotFoundController::redirect( $request, $e->getMessage() );
 		}
 	}
 
@@ -75,6 +75,7 @@ class BatchController extends AbstractController {
 			$batchId = Router::getParam( $request );
 			$repository = new BatchRepository;
 			$batch = $repository->getBatchById( $batchId );
+			$statusDelivered = Message::DELIVERED;
 			if ( !empty( $batch ) ) {
 				$messages = $repository->getBatchMessages( $batchId );
 				require VIEW_DIR . "/batch/view.php";

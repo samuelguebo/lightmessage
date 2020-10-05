@@ -27,7 +27,7 @@
 		<div class="navbar-nav">
 			<a class="nav-item nav-link" href="/"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
 			<a class="nav-item nav-link" href="/about"><i class="fa fa-cube"></i> About</a>
-			<?php if ( IS_LOGGEDIN ) {?>
+			<?php if ( IS_LOGGEDIN && IS_ALLOWED ) {?>
 				<a class="nav-item nav-link" href="/batch/create"><i class="fa fa-pencil-square-o"></i> Create batch</a>
 				
 				<!-- Summary menu

@@ -1,14 +1,14 @@
 <?php
 
 use Lightmessage\Models\Message;
-use Lightmessage\Services\MediaWiki;
+use Lightmessage\Services\ApiMediaWiki;
 use PHPUnit\Framework\TestCase;
 
-class MediawikiTest extends TestCase {
+class ApiMediaWikiTest extends TestCase {
 	/**
 	 * testHasFlowEnabled
 	 *
-	 * @covers \Lightmessage\Services\Mediawiki
+	 * @covers \Lightmessage\Services\Apiiadiki
 	 * @return void
 	 */
 	public function testHasFlowEnabled() {
@@ -18,7 +18,7 @@ class MediawikiTest extends TestCase {
 			'Samuel (WMF)'
 		);
 
-		$hasFlowEnabled = ( new MediaWiki )->hasFlowEnabled(
+		$hasFlowEnabled = ( new ApiMediaWiki )->hasFlowEnabled(
 			$message->wiki,
 			$message->page,
 		);
@@ -28,7 +28,7 @@ class MediawikiTest extends TestCase {
 
 	/**
 	 * testHasRights
-	 * @covers \Lightmessage\Services\Mediawiki
+	 * @covers \Lightmessage\Services\ApiMediaWiki
 	 * @return void
 	 */
 	public function testHasRights() {
@@ -36,7 +36,7 @@ class MediawikiTest extends TestCase {
 		$rights = [ 'otrs-member', 'steward' ];
 		$user = '-revi';
 
-		$hasRights = ( new MediaWiki )->hasRights(
+		$hasRights = ( new ApiMediaWiki )->hasRights(
 			$wiki,
 			$rights,
 			$user,

@@ -67,7 +67,7 @@ class OAuth {
 
 		// User rights
 		$username = $res->query->userinfo->name;
-		$hasRights = ( new MediaWiki )->hasRights(
+		$hasRights = ( new ApiMediaWiki )->hasRights(
 			Settings::$META_WIKI,
 			Settings::$REQUIRED_RIGHTS,
 			$username,
